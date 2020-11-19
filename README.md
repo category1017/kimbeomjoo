@@ -1,75 +1,18 @@
-Skip to content
-Search or jump to…
+### 20201119(목)
+- index.thml 더미데이터에 모바일용 CSS적용예정
+-영역지정방식 :tag방식, class방식, id방식
+-id방식은 현재html문서에서 1개만 존재해야함.(로그이시 사용하는 아이디와 같은 기능)
+-class방식은 현재html문서에서 여러개 존재해도 가능함.
+-reset.css 를 불러오게 될 예정입니다. 이 역할은 아래 
+-크로스브라우징 사전처리 역할(아래)
+-IE, 크롬, 파이어폭스, 사파리(sapari) 다양한 웹브라우저 콘텐츠가 같은 크기로 보이게 하는 역할
 
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@category1017 
-miniplugin
-/
-kimilguk
-1
-01
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
- 1 branch
- 0 tags
-Latest commit
-UserUser
-User and User 20201118 작업소스
-99ab24b
-3 minutes ago
-Git stats
- 10 commits
-Files
-Type
-Name
-Latest commit message
-Commit time
-.settings
-모두 다시 커밋 , 푸시
-yesterday
-src
-20201118 작업소스
-3 minutes ago
-.classpath
-모두 다시 커밋 , 푸시
-yesterday
-.gitignore
-모두 다시 커밋 , 푸시
-yesterday
-.project
-모두 다시 커밋 , 푸시
-yesterday
-.springBeans
-모두 다시 커밋 , 푸시
-yesterday
-Procfile
-모두 다시 커밋 , 푸시
-yesterday
-README.md
-20201118 작업소스
-3 minutes ago
-manifest.yml
-모두 다시 커밋 , 푸시
-yesterday
-pom.xml
-모두 다시 커밋 , 푸시
-yesterday
-README.md
 20201119(목) 작업예정
 index.html 더미데이터에 모바일용 CSS적용예정.
 메뉴 클릭에 대한 자바스크립트적용.
 index.html 에 태블릿용 CSS적용예정.
 index.html 에 PC용 CSS적용예정.
+
 20201118(수)
 반응형 페이지를 위한 더미데이터 입력(index.html)
 
