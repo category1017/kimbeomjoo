@@ -1,6 +1,10 @@
 @charset "UTF-8";
 /* 모바일용 스타일지정 시작 */
-body {font-size:14px;} /*부트스트랩css영향을 받은것을 무효화시키고, 사용자css로 적용*/
+body {/*부트스트랩 css또는 reset에서 초기화된것을 재정의할때*/
+font-size:14px;
+background:#fff;
+line-height:1.4;/*상속 바로전에 적용한 값을 초기화inherit,initial 시키는 역할*/
+} /*부트스트랩css영향을 받은것을 무효화시키고, 사용자css로 적용*/
 /* 헤더영역 시작 */
 .header{
 height:80px;
@@ -172,8 +176,9 @@ margin-top:30px;
 }
 .blog-section h1{
 text-align:center;
-font-size:30px;
+font-size:42px;
 color:#3f51b5;
+font-weight:normal;
 }
 .blog-section .container {
 width:90%;
