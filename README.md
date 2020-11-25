@@ -23,7 +23,7 @@
 -관계 include? 포함관계,footer.jsp(하단logo) --> home.jsp <-- header.jsp(상단메뉴, 로고포함)
 -관계 extend? 확장관계(상속관계)
 
-
+sdfsf
 ###20201124(화)
 -실행파일 확장자. .jar(자바archive실행파일),.war(웹archive실행),
 -.apk(안드로이드 package실행),.aab(안드로이드AppBundle)
