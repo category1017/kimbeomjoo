@@ -44,18 +44,26 @@ margin-left:0px;
 }
 /* we are 영역 끝*/
 
-/*work영역 시작*/
+/* work영역 시작 */
 .work-section li {
 float:left; /*세로배치를 가로배치로 변경*/
 width:50%;
 }
-/*work영역 끝*/	
+/* work영역 끝 */	
 
 /*blog영역 시작*/
 .blog-section li {
 float:left;/*세로배치가 3개 가로배치로 변함*/
 width:31.59722222222%; /*3개중 1개의 가로크기  (242px/768px)*100 = 31.59722222222%*/
 margin-left:2.6041666666%; /*1개 여백 구하기 (20px/768px)*100=2.6041666666666% */
+height:300px;
+border:1px solid #ccc;
+}
+.blog-section li div {
+height:200px;
+overflow:hidden;
+/* min-height:200px; /*이미지 최소높이를 지정*/
+/* max-height:200px; /*이미지 최대높이를 지정*/
 }
 .blog-section li:first-child {/*마지막 li가 아래로 떨어지는 것을 방지 역할*/
 margin-left:0px;
