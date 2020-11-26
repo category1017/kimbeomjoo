@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*태블릿용 스타일시작*/
 /*미디어쿼리:미디어의 가로크기가 768px 이상이면 아래 스타일 적용*/
 @media all and (min-width:768px) {
 	
@@ -59,7 +60,27 @@ margin-left:2.6041666666%; /*1개 여백 구하기 (20px/768px)*100=2.6041666666
 .blog-section li:first-child {/*마지막 li가 아래로 떨어지는 것을 방지 역할*/
 margin-left:0px;
 }
+.blog-section li:nth-child(3n+1) {
+/* 1,4,7,10,13...위치에 해당되는 것만 적용
+n번째 인덱스값이기 때문에 0부터 시작합니다. 3n-2 = 3x0-2=-2 결과가 이상함. 3n+1=3x0+1=1 */
+/* border:1px solid red; */
+margin-left:0px;
+}
 .blog-section hr {display:none;}
 /*blog영역 끝*/
 
+/*contact 영역 시작*/
+.input-class, .textarea-class {
+float:left;/*새로배치를 가로배치로 변경*/
+width:49%;/*2개로 나누는 가로크기를 각각47%로 지정*/
 }
+.input-class {
+margin-right:2%; /* 100-(49+49) */
+}
+.contact-section form textarea {
+min-height: 120px;
+}
+/*contact 영역 끝*/
+
+}
+/*태블릿용 스타일 끝*/

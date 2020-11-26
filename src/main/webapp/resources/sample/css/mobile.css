@@ -202,7 +202,7 @@ color:#424242;
 font-weight:normal;
 line-height:1.6;/*줄간격단위는 현재 글자크기의 배수*/
 }
-/*reet.css 에서 hr태그를 display:none;적용했기 때문에, 특별히 .blog영역에서만 hr 적용*/
+/*reset.css 에서 hr태그를 display:none;적용했기 때문에, 특별히 .blog영역에서만 hr 적용*/
 .blog-section hr {display:block; height:1px; background:#3f51b5;}
 /* blog 영역 끝 */
 
