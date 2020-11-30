@@ -5,7 +5,7 @@ body {/*부트스트랩 css또는 reset에서 초기화된것을 재정의할때
 font-size:14px;
 background:#fff;
 line-height:1.4 !important;/*상속 바로전에 적용한 값을 초기화inherit,initial 시키는 역할*/
-font-family:'Malgun Gothic', dotum, snans-serif !important;
+font-family:"Nanum Gothic", "NanumGothic" !important; 
 } /*부트스트랩css영향을 받은것을 무효화시키고, 사용자css로 적용*/
 /*부트스트랩 css영향을 받는 부분을 무효화시키기(아래)*/
 ul {
@@ -80,6 +80,7 @@ color:#fff;
 /*푸터 영역 시작*/
 .footer {
 padding-top:30px;/* margin-top 작동하지 않아서 padding-top으로 변경*/
+background:red;
 }
 .footer p {
 margin: 21px 0px;
