@@ -80,7 +80,7 @@ color:#fff;
 /*푸터 영역 시작*/
 .footer {
 padding-top:30px;/* margin-top 작동하지 않아서 padding-top으로 변경*/
-background:red;
+background:green;
 }
 .footer p {
 margin: 21px 0px;
