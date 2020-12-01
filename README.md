@@ -1,3 +1,13 @@
+### 20201201(화)
+-AdminLTE로 만드는 스프링 관리자 메인 html화면구현 마무리
+-관리자관리: member_list.html, member_view.html, member_write.html
+-게시물관리: board_list.html, board_view.html, board_write.html
+-관리자단 html화면구현한 내용을 jsp 만들어서 컨트롤러자바클래스에서 링크만 걸어 줍니다. 
+
+-<html lang="en"> 이부분은 PC가 영문 윈도우면 정상
+-우리 PC는 한글윈도우 이기 때문에 html lang="ko"로 변경하면 편리
+
+
 ###20201130(월)
 -AdminLTE다운받은 압출파일을 풀어서 ,폴더(dist, pages, plugins), index(1,2).html
 -위 6개를 resources폴더에 붙여 넣습니다. 
