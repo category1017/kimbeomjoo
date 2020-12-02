@@ -1,3 +1,5 @@
+###20201202 (수)
+
 ### 20201201(화)
 -AdminLTE로 만드는 스프링 관리자 메인 html화면구현 마무리
 -관리자관리: member_list.html, member_view.html, member_write.html
