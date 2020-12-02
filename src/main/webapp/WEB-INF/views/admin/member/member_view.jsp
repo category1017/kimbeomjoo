@@ -37,16 +37,16 @@
               <!-- /.card-header -->
               <div class="card-body">
                 
-                <strong><i class="fas fa-book mr-1"></i> user_id</strong>
+                <strong><i class="fas fa-portrait mr-1"></i> user_id</strong>
 				<p class="text-muted">admin</p>
 				<!-- 부트스트랩  mr-1 오른쪽여백주기 클래스명 : (margin-right:25% 여백 important;)-->
 
                 <hr>
-				<strong><i class="fas fa-map-marker-alt mr-1"></i> user_name</strong>
+				<strong><i class="fas fa-signature mr-1"></i> user_name</strong>
 				<p class="text-muted">관리자</p>
 
                 <hr><!--horizontal 수평선 태그 -->
-				<strong><i class="fas fa-pencil-alt mr-1"></i> email</strong>
+				<strong><i class="far fa-envelope mr-1"></i> email</strong>
 				<p class="text-muted">admin@abc.com</p>
 
                 <hr>
@@ -66,9 +66,9 @@
            
               <!-- 버튼영역 시작 -->
               <div class="card-body">
-              <a href="member_list.html" class="btn btn-primary float-right mr-1">LIST ALL</a>
-              <a href="member_list.html" class="btn btn-danger float-right mr-1">DELETE</a>
-              <a href="member_write.html" class="btn btn-warning float-right mr-1 text-white">UPDATE</a>
+              <a href="/admin/member_list" class="btn btn-primary float-right mr-1">LIST ALL</a>
+              <button type="button" class="btn btn-danger float-right mr-1">DELETE</button>
+              <button type="button" class="btn btn-warning float-right mr-1 text-white">UPDATE</button>
               <!-- 부트스트랩 디자인 버튼클래스를 이용해서 a태그를 버튼모양으로 만들기(위) -->
               <!-- btn클래스명이 버튼모양으로 변경, btn-primary클래스명은 버튼색상을 변경하는 역할 -->
               <!-- style이 아닌 class인 이유 부트스트랩에 이미 style이 적용되어있어서 -->
