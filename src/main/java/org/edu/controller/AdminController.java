@@ -10,7 +10,7 @@ public class AdminController {
 	//bind:묶는다는 의미, /admin 요청경로와 admin/home.jsp를 묶는다는 의미.
 	@RequestMapping(value="/admin",method=RequestMethod.GET)
 	public String admin() {
-		return "admin/home";
+		return "admin/home";// views/admin/home.jsp와 바인딩상대경로 파일위치
 	}
 	
 }
