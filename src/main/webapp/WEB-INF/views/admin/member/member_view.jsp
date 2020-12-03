@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- jstl은 jsp의 표준태그 라이브러리 입니다. java standard tag library -->	
 <%@ include file="../include/header.jsp" %>
 
 <!-- 대시보드 본문 Content Wrapper. Contains page content -->
@@ -38,9 +40,13 @@
               <div class="card-body">
                 
                 <strong><i class="fas fa-portrait mr-1"></i> user_id</strong>
-				<p class="text-muted">admin</p>
+				<p class="text-muted">
+				<!-- jsp에서 자바변수(저장소)를 사용하는 방법 Model로 수신한  $변수명 으로 표시 -->
+				<%-- ${user_id2} 아래 보안코딩 적용 (씨큐어코딩)--%>
+				<c:out value="${user_id2 }"></c:out>
+				</p>
+				
 				<!-- 부트스트랩  mr-1 오른쪽여백주기 클래스명 : (margin-right:25% 여백 important;)-->
-
                 <hr>
 				<strong><i class="fas fa-signature mr-1"></i> user_name</strong>
 				<p class="text-muted">관리자</p>
