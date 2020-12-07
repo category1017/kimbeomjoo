@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminController {
 	
 	@RequestMapping(value="admin/board/board_list",method=RequestMethod.GET)
-	public String board_list() {
+	public String board_list() throws Exception {
 		return "admin/board/board_list";
 	}
 	
 	//메서드 오버로딩(예, 동영상 로딩중..., 로딩된 매개변수가 다르면 메서드이름을 중복사용가능합니다.)
 	@RequestMapping(value="admin/member/member_write",method=RequestMethod.POST)
-	public String member_write(@RequestParam ("user_name") String user_name) {
+	public String member_write(@RequestParam ("user_name") String user_name) throws Exception{
 		//아래 GET방식의 폼출력화면에서 데이터 전송받은 내용을 처리하는 바인딩.
 		//DB베이스 입력/출력/삭제/수정 처리-다음에...
 		return "redirect:/admin/member/member_list";//절대경로로 처리된 이후에 이동할 URL주소를 여기에 반환 (글쓰기 후 새로고침 방지)
 	}
 	
 	@RequestMapping(value="/admin/member/member_write",method=RequestMethod.GET)
-	public String member_write() {
+	public String member_write() throws Exception {
 		return "admin/member/member_write";
 	}
 	
@@ -32,7 +32,7 @@ public class AdminController {
 	//현재컨트롤러 클래스에서 jsp로 데이터를 보내는 역할 Model 클래스 사용. 
 	//데이터 흐름 : member_list > @RequestParam("user_id")수신, Model 송신 > member_view.jsp
 	@RequestMapping(value="/admin/member/member_view",method=RequestMethod.GET)
-	public String member_view(@RequestParam("user_id") String user_id, Model model) {
+	public String member_view(@RequestParam("user_id") String user_id, Model model) throws Exception{
 		//위에서 수신한 user_id를 개발자가 만든 user_id2이름으로 member_view.jsp 보냅니다(아래)
 		//(member_list에서 받은 user_id를 member_view에 보냄)
 		//member_view.jsp에서 model로 수신한 데이터user_id2를 출력하는 방법(점심이후)
@@ -42,7 +42,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/member/member_list",method=RequestMethod.GET)
-	public String member_list(Model model) {
+	public String member_list(Model model) throws Exception {
 		String[][] members = {
 				{"admin","찐관리자","admin@abc.com","true", "2020-12-04", "ROLE_ADMIN"},
 				{"user","일반사용자1","user@abc.com","false","2020-12-04","ROLE_USER"}
@@ -52,12 +52,10 @@ public class AdminController {
 		return "admin/member/member_list";//member_list.jsp 로 members변수명으로 데이터를 전송
 	}
 	
-	
-	
 	//bind:묶는다는 의미, /admin 요청경로와 admin/home.jsp를 묶는다는 의미.
 	@RequestMapping(value="/admin",method=RequestMethod.GET)
-	public String admin() {
-		return "admin/home";// views/admin/home.jsp와 바인딩상대경로 파일위치
+	public String admin() throws Exception {
+		return "admin/home";// views/admin/home.jsp와 바인딩 상대경로 파일위치
 	}
 	
 }

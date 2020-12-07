@@ -5,7 +5,7 @@ public class InterfaceApp {
 	public static void main(String[] args) {
 		// 항상 자바프로그램은 main()진입점에서 실행해야함. 단, 웹프로그램은 해당 없음.
 		AllCalc allCalc = new AllCalc();//실행 오브젝트 변수 allCalc 생성
-		allCalc.add(5, 5);
+		allCalc.add(5, 5);//메서드를 호출할때, 5,5
 		allCalc.sub(5, 5);
 		allCalc.mul(5, 5);
 		allCalc.div(5, 5);

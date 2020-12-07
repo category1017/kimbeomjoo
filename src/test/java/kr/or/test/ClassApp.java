@@ -43,7 +43,7 @@ abstract class GraphicObject {
 }
 class Triangle extends GraphicObject {
 	//메서드 오버라이드(메서드 이름이 같은 것을 실행-상속관계)
-	@Override
+	@Override//메서드 재정의
 	void draw() {
 		System.out.println("  *");
 		System.out.println(" * * ");
