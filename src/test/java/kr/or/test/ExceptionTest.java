@@ -11,12 +11,14 @@ public class ExceptionTest {
 	public static void main(String[] args) {
 		// 집입실행메서드 main()
 		// 메서드 내부변수 (멤버 변수는 class바로 아래에 있어야함.)
-		String[] stringArray = {"10", "2a", "100"};
+		String[] stringArray = {"10", "2a", "100"};//2a : 강제로 예외사항 발생하기 위해 
 		int indexValue = 0;
 		for(int cnt=0;cnt<=2;cnt++) {
-			/*indexValue = Integer.parseInt(stringArray[cnt]);//배열의 문자값을 int형변환
-				System.out.println(cnt + "번째 배열에 저장된 숫자는 =" + indexValue);
+			/* 예외처리 Exception처리를 하지 않으면, 프로그램이 종료됩니다.
+			indexValue = Integer.parseInt(stringArray[cnt]);//배열의 문자값을 int형변환
+			System.out.println(cnt + "번째 배열에 저장된 숫자는 =" + indexValue);
 			*/
+			//아래처럼 예외처리를 하면, 프로그램종료되지 않고, 예외에 대해 메세지만 출력하고, 계속 실행됨.
 			
 			try {
 				indexValue = Integer.parseInt(stringArray[cnt]);//배열의 문자값을 int형변환
