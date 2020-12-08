@@ -1,0 +1,9 @@
+---
+applications:
+- name: kimbeomjoo
+  buildpacks: https://github.com/cloudfoundry/java-buildpack
+  memory: 1024M
+  disk_quota: 1024M
+  instances: 1
+  host: kimbeomjoo
+  domain: paas-ta.org
