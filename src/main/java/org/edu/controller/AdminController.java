@@ -58,6 +58,13 @@ public class AdminController {
 		//아래 Object는 java.lang패키지의 최상위 클래스로서 import 안해도 자동으로 사용가능.
 		//Map 타입이 부모, HashMap 자식클래스 이런방식으로 사용하는 것이 관례상, paramMap오브젝트의 확장하기 편하도록 하기 위해서 
 		//Map타입을 상속받아서, HashMap타입의 오브젝트를 생성하는 방식.
+		Map<String,Integer> mapTest = new HashMap<String,Integer>();
+		String ageValue = "40";
+		int ageValue2 = 40;
+		mapTest.put("ageValue2", ageValue2);
+		mapTest.put("age",Integer.parseInt(ageValue));//제네릭타입을 사용하면, 여기처럼 parseInt형변환을 할필요가 없음
+		//제네릭타입의 근본목적은 데이터타입에 대해서 명시적인 코딩을 해서 코드를 단순화 시키기 위해서
+		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("user_id", "admin");
 		paramMap.put("user_name","관리자");
@@ -82,6 +89,7 @@ public class AdminController {
 		//-----------------------------------------------------------------------
 		//실제 코딩에서는 배열타입으로 보내지 않고, List타입(목록)으로 model 이용해서 jsp로 보냄.
 		List<MemberVO> members_list = Arrays.asList(members_array);
+		List m_list = null;
 		//위에서 만든 members_array배열오브젝트를 Arrays.as.List타입으로 변경해서 jsp로 보냄.
 		//위에서 데이터타입연습으로 총3가지 데이터 타입을 확인했음.
 		System.out.println("list타입의 오브젝트 클래스 내용을 출력 " + members_list.toString());
