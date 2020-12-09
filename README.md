@@ -1,5 +1,9 @@
 ###20201209(수)
 -prefix(jstl), suffix(servelet-context.xml)
+-@RequestMapping...반환값에서 prefix(/WEB-INF/views/)가 사용, suffix(.jsp)
+-	...
+-		return "{prefix}admin/board/board_list{suffix}";
+-	...
 -경로 앞부분  ,     경로 뒷부분을    생략가능하게 만드는 역할
 -아래에서 사용된 prefix는 생략가능
 -<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -8,6 +12,12 @@
 -beans : 스프링에 등록된 class
 ---------------------------------------------------------------
 -webapp/resources/html만들고 ->jsp변환작업
+-Rest API 방식으로 화면을 처리하는 것이 트랜드
+-Rest : Representation 기존 데이터를 가지고, 화면 깜빡임 없이 데이터를 재가공하는 처리. 
+-(원래 화면에 변화없이 데이터만 실시간으로 변경됨.)
+-빅데이터를 시각화 하는 데 RestAPI + Ajax 기술 사용
+-REST API사용되는 기술 : 데이터 전송/수신 Ajax기술(프론트-개발자)로 처리.API(서버단기술)
+-Ajax : Asyncronized Javascript and Xml 비동기 통신으로 자바 스크립트로 데이터Json(text자료)를 재처리하는 기술.
 
 ###20201208(화)
 -2차원 배열변수 --> 클래스오브젝트 배열타입 변수로 변경 --> 클래스오브젝트 list타입 변수로 변경
