@@ -4,9 +4,11 @@ import kr.or.member.MemberVO;
 
 public class MemberService {
 	public void printMember(MemberVO[] members) { //members는 레코드가 여러개=여러줄
-		//서비스 구현 메서드 내용(아래) 향상된 for반복문 사용 >> for(변수  배열값)
+		//서비스 구현 메서드 내용(아래) 향상된 for반복문 사용 >> for(변수  배열값) 형태
 		int cnt=0;
-		for(MemberVO member:members) {//members여러 레코드 중 1개의 레코드를 member오브젝트 객체로 대입
+		for(MemberVO member:members) {//members의 여러 레코드 중 1개의 레코드를 member오브젝트 객체로 대입
+			// members[0] , members[1], members[2] 모두 MemberVO클래스의 member중 하나
+			//MemberVO클래스형 데이터타입을 member(변수)
 			cnt = cnt +1;
 			System.out.println(cnt + "번째 레코드는 " + member.toString());
 			}
