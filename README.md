@@ -1,3 +1,14 @@
+###20201209(수)
+-prefix(jstl), suffix(servelet-context.xml)
+-경로 앞부분  ,     경로 뒷부분을    생략가능하게 만드는 역할
+-아래에서 사용된 prefix는 생략가능
+-<beans:property name="prefix" value="/WEB-INF/views/" />
+-아래에서 사용된 suffix는 생략가능
+-<beans:property name="suffix" value=".jsp" />
+-beans : 스프링에 등록된 class
+---------------------------------------------------------------
+-webapp/resources/html만들고 ->jsp변환작업
+
 ###20201208(화)
 -2차원 배열변수 --> 클래스오브젝트 배열타입 변수로 변경 --> 클래스오브젝트 list타입 변수로 변경
 -제네릭 : Generic 일반적인 변수 타입. Map<String,Integer> mapTest = new HashMap<String,Integer>();
