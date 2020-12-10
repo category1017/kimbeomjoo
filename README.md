@@ -1,3 +1,17 @@
+###
+-스프링관리자 Admin템플릿 샘플:
+- https://adminlte.io/themes/v3/pages/UI/timeline.html
+- https://kimilguk-mysql.herokuapp.com/ (아이디/암호:admin/user02)
+
+
+
+###20201210(목)
+-모달(Modal): 이용자가 팝업 대화상자 내용을 종료하기 전에는 다른 화면으로 이동하지 못하는 방식 팝업창.
+-모달리스(Modeless) : 이용자가 팝업대화상자 내용을 종료하기 전이라도, 현재 팝업창을 띄운상태에서 다른 창으로 이동가능.
+-댓글 관련 디자인 추가 후 Ajax적용
+
+
+
 ###20201209(수)
 -prefix(jstl), suffix(servelet-context.xml)
 -@RequestMapping...반환값에서 prefix(/WEB-INF/views/)가 사용, suffix(.jsp)
