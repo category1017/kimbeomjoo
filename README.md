@@ -13,6 +13,10 @@
 -첨부파일 등록에 사용되는 form 태그에는 특별한 속성이 추가되어야만, 파일 전송이 가능함
 -그 속성은 : encType="mutipart/form-data" 필수. 파일전송이 포함된 폼에서는 엔코딩타입속성에서 파일분할로 전송
 
+-html게시판 소스를 jsp로 변환
+-리버스 엔지니어링 : 물리DB->erd
+-일반 erd만들고 -> 물리DB
+
 
 ###20201209(수)
 -prefix(jstl), suffix(servelet-context.xml)
