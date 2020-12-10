@@ -364,11 +364,8 @@ jstl을 사용하려면, jsp에서 <%@ taglib uri...처럼 외부 core를 가져
 	<i class="fas fa-envelope bg-blue"></i>
 	<div class="timeline-item">
 		<h3 class="timeline-header">{{replyer}}</h3>
-		<div class="timeline-body">
-				{{replytext}}
-		</div>
+		<div class="timeline-body">{{replytext}}</div>
 		<div class="timeline-footer">
-				<!-- Button trigger modal -->
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#replyModal">
 			  수정
 			</button> 
@@ -414,14 +411,15 @@ $(document).ready(function() {
 </script>
 <!-- 댓글리스트에서 수정 버튼을 클릭했을 때, 팝업창이 뜨는데, 그 팝업창에 내용을 동적으로 변경시켜주는 구현 (아래) -->
 <script>
-$(document).ready(function) {
+$(document).ready(function() {
 	$(".timeline").on("click", ".template-div", function() { //.template-div는 댓글리스트영역
 		//$(this);//클릭한 댓글에 따라서 this는 첫번째 댓글일 수도, 두번째 댓글일 수도 있다.
 		$("#rno").val($(this).attr("data-rno"));
-		$(".modal-title").html($(this).find(".timeline-header").text());
+		$(".modal-title").html($(this).find(".timeline-header").text());		
 		$("#replytext").val($(this).find(".timeline-body").text());
+		//alert("디버그 "+ $(this).find(".timeline-body").text());
 		//마우스클릭으로 선택한 댓글의 .timeline-body 영역의 text문자를 
-		//모달창의 #replytext영역에 값으로 입력하겠다.
+		//모달창의 #replytext영역에 값으로 입력하겠음.
 	});
 });
 </script>
