@@ -1,12 +1,29 @@
-###20201211(금)
--Board VO 클래스 만들기: admin컨트롤러에서 Model클래스를 이용해서  jsp로 board_list 데이터셋을 보낸때 필요한 클래스
-
-
 ### 기본정보
 -스프링관리자 Admin템플릿 샘플:
 - https://adminlte.io/themes/v3/pages/UI/timeline.html
 - https://kimilguk-mysql.herokuapp.com/ (아이디/암호:admin/user02)
 
+
+###20201211(금)
+-게시판 로직에서 핵심 :CRUD기본, 검색기능, 페이징처리로직, 첨부파일기능
+-게시판 로직확장 : 댓글기능(Rest-API).
+-Rest-API확장기능 : 네이버아이디로그인(우리는 여기까지), SNS(페이스북,트위터,구글) 로그인 API
+---------------------------------------------------------------------------------
+-스프링 빈(등록되어서 사용가능하게된 클래스)이 등록되는 절차(아래)
+-톰캣서버(WAS)가 실행될때, 로딩 실행되는 파일 순서(아래)
+- web.xml 최초 실행.
+1. root-context.xml실행.
+2. servlet(server+let=서버프로그램) : servlet-context.xml실행
+-위 servlet_context안에 있는 component-span 지정한 패키지에 존재하는 아래 @~~클래스를 읽어 들여서 빈으로 등록합니다.(아래)
+@Controller, @Service, @Repository, @RestController(Rest-API)
+-----------------------------------------------------------------------------------------
+-자바에서 인스턴스 오브젝트를 만들때, ClassName className = new ClassName(); 오브젝트를 만들었음.->생성방식
+-스프링에서 오브젝트를 생성하지 않고, 오브젝트를 주입한다고 하고, 기술용어로 DI(Dependency Injection)의존성 주입.
+-의존성주입(DI,외부모듈)할때, @Inject(=@Autowired) 줄바꿈하고 ClassName className; ->주입방식
+-위 DI방식으로 SecurityCode클래스를 주입받아서, unscript메서드를 사용하였음.
+-Board VO 클래스 만들기: admin컨트롤러에서 Model클래스를 이용해서  jsp로 board_list 데이터셋을 보낸때 필요한 클래스
+-쿼리스트링: 쿼리(질의)스트링(문자열) URL에서 쿼리스트링이라고 하면, URL?키1=값1&key2=value2
+-/admin/board/board_view?
 
 
 ###20201210(목)

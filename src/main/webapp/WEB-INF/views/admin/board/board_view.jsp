@@ -77,11 +77,9 @@
 
 							<!-- 버튼영역 시작 -->
 							<div class="card-body">
-								<a href="board_list.html"
-									class="btn btn-primary float-right mr-1">LIST ALL</a> <a
-									href="board_list.html" class="btn btn-danger float-right mr-1">DELETE</a>
-								<a href="board_write.html"
-									class="btn btn-warning float-right mr-1 text-white">UPDATE</a>
+								<a href="/admin/board/board_list" class="btn btn-primary float-right mr-1">LIST ALL</a> 
+								<button class="btn btn-danger float-right mr-1">DELETE</button>
+								<a href="/admin/board/board_update?bno=${boardVO.bno}" class="btn btn-warning float-right mr-1 text-white">UPDATE</a>
 								<!-- 부트스트랩 디자인 버튼클래스를 이용해서 a태그를 버튼모양으로 만들기(위) -->
 								<!-- btn클래스명이 버튼모양으로 변경, btn-primary클래스명은 버튼색상을 변경하는 역할 -->
 								<!-- style이 아닌 class인 이유 부트스트랩에 이미 style이 적용되어있어서 -->
@@ -98,17 +96,13 @@
 
 									<div class="card-body">
 										<div class="form-group">
-											<label for="writer">writer</label> 
-											<input type="text"
-												class="form-control" name="writer" id="writer"
-												placeholder="작성자를 입력해주세요." required>
+											<label for="replyer">replyer</label> 
+											<input type="text" class="form-control" name="replyer" id="replyer" placeholder="작성자를 입력해주세요." required>
 											<!--폼에서 input같은 입력태그에는 name속성이 반드시 필요,데이터베이스에 입력할 때 변수값을 전송하게 되늰데, 전송값을 저장하는 이름이 name가 되고 위에서는 writer -->
 										</div>
 										<div class="form-group">
-											<label for="reply_text">Reply Text</label> 
-											<input
-												type="text" class="form-control" name="reply_text"
-												id="reply_text" placeholder="내용을 입력해주세요." required>
+											<label for="replytext">Reply Text</label> 
+											<input type="text" class="form-control" name="replytext" id="replytext" placeholder="내용을 입력해주세요." required>
 											<!--게시판에서는 폼을 전송할 때 submit 타입을 사용하지만, 댓글 Ajax로 전송하기 때문에, button타입으로 지정함.  -->
 										</div>
 										<button type="button"

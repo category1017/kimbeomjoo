@@ -20,17 +20,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 //스프링에서 사용가능한 클래스를 빈(커피Bean)이라고 하고, @controller 클래스 사용하면, bean으로 등록됨.
 @Controller
 public class AdminController {
-	//@Inject== @Autowired 의존성 주입방식으로 DI(Dependency Inject)으로 외부 라이이브러리 모듈 클래스 인스턴스 갖다 쓰기 (아래)
+	//@Inject== @Autowired 의존성 주입방식으로 DI(Dependency Inject)으로 
+	//외부 라이이브러리 =컴포넌트 = 모듈 = 실행클래스 인스턴스 갖다 쓰기 (아래)
 	@Inject
 	SecurityCode securityCode;
 	
 	@RequestMapping(value="/admin/board/board_view", method=RequestMethod.GET)
 	public String board_view(Model model) throws Exception {
 		//jsp로 보낼 더미 데이터 memberVO에 담아서 보낸다.
+		//실제로는 아래처럼 더미데이터를 만든것이 아닌
+		//쿼리스트링(질의문자열0로 받아온 bno(게시물 고유번호0=)를 이용해서DB에서
+		//select * from tbl_boared where bno = ? 실행이 된 결과값이 List<BoardVO>형으로 받아서 jsp보내줌.
+		//'3', '새로운 글을 넣습니다. ', '새로운 글을 넣습니다. ', 'user00', '2019-10-10 12:25:36', '2019-10-10 12:25:36', '0', '0'
+
 		BoardVO boardVO =  new BoardVO();
 		boardVO.setBno(1);
 		boardVO.setTitle("첫번째 게시물 입니다.");
-		String xss_data = "첫번째 내용 입니다.<br>줄바꿈 처리입니다. <script>loacation.href('이상한사이트로 이동');</script>";
+		String xss_data = "첫번째 내용 입니다.<br><br>줄바꿈 처리입니다. <script>loacation.href('이상한사이트로 이동');</script>";
 		boardVO.setContent(securityCode.unscript(xss_data));
 		boardVO.setWriter("admin");
 		Date regdate = new Date();
