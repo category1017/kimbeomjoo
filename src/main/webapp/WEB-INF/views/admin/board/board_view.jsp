@@ -79,7 +79,7 @@
 							<div class="card-body">
 								<a href="/admin/board/board_list" class="btn btn-primary float-right mr-1">LIST ALL</a> 
 								<button class="btn btn-danger float-right mr-1">DELETE</button>
-								<a href="/admin/board/board_update?bno=${boardVO.bno}" class="btn btn-warning float-right mr-1 text-white">UPDATE</a>
+								<a href="/admin/board/board_write?bno=${boardVO.bno}" class="btn btn-warning float-right mr-1 text-white">UPDATE</a>
 								<!-- 부트스트랩 디자인 버튼클래스를 이용해서 a태그를 버튼모양으로 만들기(위) -->
 								<!-- btn클래스명이 버튼모양으로 변경, btn-primary클래스명은 버튼색상을 변경하는 역할 -->
 								<!-- style이 아닌 class인 이유 부트스트랩에 이미 style이 적용되어있어서 -->
@@ -209,10 +209,11 @@ $(document).ready(function() {
 		//Ajax를 이용해서, 화면을 Representation (REST-API 방식) 부분 화면을 재구현(아래)
 		$.ajax({//통신프로그램
 			//여기부터는 프론트 엔드 개발자 영역
-			type:'get',//지금은 html이라서 get방식이지만, jsp로가면 post방식으로 바뀌어야함
-			url:'board_view.html', //jsp로 가면, ReplyController에서 지정한 url로 바뀌어야함.
+			type:'post',//지금은 html이라서 get방식이지만, jsp로가면 post방식으로 바뀌어야함
+			url:'/reply/reply_write', //jsp로 가면, ReplyController에서 지정한 url로 바뀌어야함.
 			dataType:'text',//ReplyController에서 받은 데이터의 형식은 text형식으로 받겠다고 명시.
 			success:function(result) { //통신응답이 성공하면 (상태값 200ok)위 경로에서 반환받은 result (json텍스트 데이터)를 이용해서 화면을 재구성.
+				alert(result);
 				//지금은 html이라서 result값을 이용할 수가 없어서 댓글 더미데이터를 만듦.(아래)
 				result = [
 					//{rno:댓글번호,bno:게시물번호,replytext:"첫번째 댓글", replyer:"admin", regdate:타임스탬프}
@@ -256,8 +257,8 @@ $(document).ready(function() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">수정</button>
-      	<button type="botton" class="btn btn-danger">삭제</button>
+        <button type="button" class="btn btn-primary" id="updateReplyBtn">수정</button>
+      	<button type="botton" class="btn btn-danger" id="deleteReplyBtn">삭제</button>
       </div>
     </div>
   </div>
