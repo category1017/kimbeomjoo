@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.edu.util.SecurityCode;
 import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
 import org.springframework.stereotype.Controller;
@@ -17,7 +20,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 //스프링에서 사용가능한 클래스를 빈(커피Bean)이라고 하고, @controller 클래스 사용하면, bean으로 등록됨.
 @Controller
 public class AdminController {
+	//@Inject== @Autowired 의존성 주입방식으로 DI(Dependency Inject)으로 외부 라이이브러리 모듈 클래스 인스턴스 갖다 쓰기 (아래)
+	@Inject
+	SecurityCode securityCode;
 	
+	@RequestMapping(value="/admin/board/board_view", method=RequestMethod.GET)
+	public String board_view(Model model) throws Exception {
+		//jsp로 보낼 더미 데이터 memberVO에 담아서 보낸다.
+		BoardVO boardVO =  new BoardVO();
+		boardVO.setBno(1);
+		boardVO.setTitle("첫번째 게시물 입니다.");
+		String xss_data = "첫번째 내용 입니다.<br>줄바꿈 처리입니다. <script>loacation.href('이상한사이트로 이동');</script>";
+		boardVO.setContent(securityCode.unscript(xss_data));
+		boardVO.setWriter("admin");
+		Date regdate = new Date();
+		boardVO.setRegdate(regdate);
+		boardVO.setView_count(2);
+		boardVO.setReply_count(0);
+		model.addAttribute("boardVO", boardVO);
+		return "admin/board/board_view";
+			
+	}
 	@RequestMapping(value="admin/board/board_list",method=RequestMethod.GET)
 	public String board_list(Model model) throws Exception {
 		//테스트용 더미 게시판 데이터 만들기(아래)
@@ -33,9 +56,18 @@ public class AdminController {
 		BoardVO[] board_array = new BoardVO[2];
 		//input_board = {1,"첫번째 게시물 입니다.", "첫번째 내용입니다.<br>줄바꿈했습니다.", "admin", now(),2,0};
 		board_array[0] = input_board;
-		input_board.setBno(2); //게시물 번호만 2로 변경하여 나머지값들은 변경없이 아래 1레코드에 저장
-		//{2,"첫번째 게시물 입니다.", "첫번째 내용입니다.<br>줄바꿈했습니다.", "admin", now(),2,0};
-		board_array[1] = input_board;
+		//--------------------------------------------------
+		BoardVO input_board2 = new BoardVO();
+		input_board2.setBno(2);
+		input_board2.setTitle("두번째 게시물 입니다.");
+		input_board2.setContent("두번째 내용입니다.<br>줄바꿈 했습니다.");
+		input_board2.setWriter("user02");
+		input_board2.setRegdate(regdate);
+		input_board2.setView_count(2);
+		input_board2.setReply_count(0);
+		//input_board = {1,"첫번째 게시물 입니다.", "첫번째 내용입니다.<br>줄바꿈했습니다.", "admin", now(),2,0};
+		board_array[1] = input_board2;
+		//-----------------------------------------
 		List<BoardVO> board_list = Arrays.asList(board_array);//배열타입을 List타입으로 변경하는 절차.
 		model.addAttribute("board_list", board_list);
 		return "admin/board/board_list";
