@@ -1,3 +1,7 @@
+###20201211(금)
+-Board VO 클래스 만들기: admin컨트롤러에서 Model클래스를 이용해서  jsp로 board_list 데이터셋을 보낸때 필요한 클래스
+
+
 ### 기본정보
 -스프링관리자 Admin템플릿 샘플:
 - https://adminlte.io/themes/v3/pages/UI/timeline.html
