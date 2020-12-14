@@ -4,7 +4,25 @@
 -메이븐으로 빌드: pon.xml사용 (xml태그로 구성)-egov(이클립스) 기본개발환경
 -그래들으로 빌드: build.gradle사용(스크리트로 구성) - 안드로이드 스튜디오 기본개발환경
 -메이븐, 그래들 모두 빌드 도구로 실행결과는 target폴더에 war파일이 만들어짐.
+-----------------------------------------------------------------
+-개발 시작 전 준비 단계(톰캣/JUnit을 실행해야만 DB가 연동이 됨 ->톰캣/JUnit테스트가 끝나면, 연동이 끊김.)
+-JUnit 테스트 준비 ok
+-데이터베이스 접속 테스트.(아래)
+-데이터베이스 사용 라이브러리 추라( pon.xml)
+-스프링 테스트 pom.xml디펜던시 의존성 추가
+-의존성추가1. jdbc(java database Connection )모듈 추가.
+-의존성추가2. Mysql 모듈추가.
+-의존성추가3. jdbc와 Mysql데이터베이스 중간에 쿼리를 사용하는 역할 mybatis 모듈추가 후 설정 필수.
+-마이바티스에는 Select, Insert, Update, Delete쿼리를 수행하는 역할.
+-서블렛 버전을 2.3 -> 3.0.1로 변경 필수(아래)
 
+```
+<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+```
 
 ### 기본정보
 -스프링관리자 Admin템플릿 샘플:
