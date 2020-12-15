@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,6 +38,41 @@ public class DataSourceTest {
 	
 	@Inject
 	IF_MemberDAO memberDAO;
+	
+	public String memberPrimaryKey() {
+		//사용자 프라이머리키 생성하는 메서드 년월시분초 + 밀리초
+		Date primaryKey = new Date();
+		SimpleDateFormat newFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");		
+		System.out.println("프라이머리키 : " + newFormat.format(primaryKey));
+		return "user_" + newFormat.format(primaryKey);
+	}
+
+	
+	@Test
+	public void deleteMember() throws Exception {
+		//CRUD 중 Delete 테스트 구현(쿼리 -> DAO -> memberDAO주입 받은 오브젝트 사용)  
+		
+	}
+	
+	@Test
+	public void insertMember() throws Exception {
+		//CRUE 중 Create 테스트
+		MemberVO memberVO = new MemberVO();
+		//사용자 생성 규칙 : user_ 시작(prefix), 접미사(suffix)는 년월일시분초
+		//사용자 생성 결과 예 : user_20201215151432
+		String memberIdKey = memberPrimaryKey();
+		memberVO.setUser_id(memberIdKey);
+		memberVO.setUser_name("사용자03");
+		//패스워드 암호화 처리(필수)-> 나중에 스프링 시큐리티할 때 처리 예정
+		memberVO.setUser_pw("1234");
+		memberVO.setEmail("user03@abc.com");
+		memberVO.setPoint(100);
+		memberVO.setEnabled(true);
+		memberVO.setLevels("ROLE_USER");
+		Date reg_date = new Date();
+		memberVO.setReg_date(reg_date);//메퍼쿼리에서 처리로 대체
+		memberDAO.insertMember(memberVO);
+	}
 	
 	@Test
 	public void selectMember() throws Exception {
