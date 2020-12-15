@@ -18,6 +18,7 @@ public class MemberDAOImpl implements IF_MemberDAO {
 		// mapper.xml에 접근하는 방법(아래)
 		// 오브젝트의 메서드를 실행할때, .입력힌트가 나오지 않으면, ctrl+space키를 눌러서 메서드 나오게 함.
 		return sqlSession.selectList("memberMapper.selectMember");
+		//sqlSession템플릿의 selectList메서드를 실행하면, memberMapper.selectMember의 쿼리를 실행하게 됩니다.
 	}
 
 }
