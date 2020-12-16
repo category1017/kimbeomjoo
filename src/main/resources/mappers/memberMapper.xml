@@ -17,11 +17,11 @@ user_name like 'user_2020%' -->
 
 <select id="selectMember" resultType="org.edu.vo.MemberVO">
 select * from tbl_member
-<if test="search_type !=''">
+<if test="search_type !='' and search_type !=null">
 	where
 	<if test="search_type == 'all'.toString()">
 			user_id like concat('%',#{search_keyword},'%')
-				or
+			or
 			user_name like concat('%',#{search_keyword},'%')
 	</if>
 	<if test="search_type == 'user_id'.toString()">
