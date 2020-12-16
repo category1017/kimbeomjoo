@@ -34,9 +34,30 @@ INSERT INTO tbl_member (
 	now()
 )
 </insert>
+<!-- jsp에서 변수표현 EL표현법 ${변수명}, 마이바티스에서는 변수표현을 #{변수명} -->
+<!-- 마이바티스의 장점, 쿼리 안쪽에 조건문을 삽입 할수있음. ex, 아래와 같이 비밀번호설정 필수일 때 조건문필요 -->
+<update id="updateMember">
+UPDATE tbl_member 
+SET 
+   user_name = #{user_name},
+	<if test="user_pw !='' ">
+   user_pw = #{user_pw},
+   	</if>
+   email = #{email},
+   point = #{point},
+   enabled = #{enabled},
+   levels = #{levels},
+   update_date = now()
+WHERE
+    user_id = #{user_id}
+</update>
 
 <delete id="deleteMember">
-DELETE FROM tbl_member WHERE user_id=#{user_id};
+DELETE FROM tbl_member WHERE user_id=#{user_id}
 </delete>
+
+<select id="readMember" resultType="org.edu.vo.MemberVO">
+SELECT * FROM tbl_member WHERE user_id=#{user_id}
+</select>
 
 </mapper>

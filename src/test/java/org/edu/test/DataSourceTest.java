@@ -39,6 +39,9 @@ public class DataSourceTest {
 	@Inject
 	IF_MemberDAO memberDAO;
 	
+	//@Inject//사용하면 안되는 이유: 클래스상단에 @Controller, @Service, @Repository, @Component 이런내용만 @Inject합니다.
+	//MemberVO memberVO; //기존 자바처럼 new MemberVO() 오브젝트를 생성하지 않고, 주입해서 사용.
+	
 	public String memberPrimaryKey() {
 		//사용자 프라이머리키 생성하는 메서드 년월시분초 + 밀리초
 		Date primaryKey = new Date();
@@ -46,12 +49,36 @@ public class DataSourceTest {
 		System.out.println("프라이머리키 : " + newFormat.format(primaryKey));
 		return "user_" + newFormat.format(primaryKey);
 	}
-
+	
+	@Test
+	public void updateMember() throws Exception {
+		//CRUD 중 Update 테스트 구현 특징, user_id는 프라이어키 이기 때문에 수정대상이 아님.
+		MemberVO memberVO = new MemberVO();
+		memberVO.setUser_id("admin");
+		memberVO.setUser_name("아무개");
+		memberVO.setUser_pw("");//암호를 수정하지 않는 사람을 가정
+		memberVO.setEmail("test@test.com");
+		memberVO.setPoint(100);
+		memberVO.setEnabled(true);
+		memberVO.setLevels("ROLE_admin");
+		memberVO.setUser_id("admin");
+		String user_id = memberVO.getUser_id();//memberVO의 오브젝트의 데이터는 1개의 레코드이기 때문에 반환값이 1개만 
+		memberDAO.updateMember(memberVO);
+	}
+	
+	@Test
+	public void readMember() throws Exception {
+		//CRUD 중 Read 테스트 구현
+		MemberVO memberVO = new MemberVO();
+		memberVO = memberDAO.readMember("admin");
+		System.out.println("admin 에 대한 상세정보 입니다.");
+		System.out.println(memberVO.toString());
+	}
 	
 	@Test
 	public void deleteMember() throws Exception {
 		//CRUD 중 Delete 테스트 구현(쿼리 -> DAO -> memberDAO주입 받은 오브젝트 사용)  
-		
+		memberDAO.deleteMember("user_20201215145638119");//삭제메서드 -> 쿼리 호출
 	}
 	
 	@Test
