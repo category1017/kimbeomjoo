@@ -1,7 +1,33 @@
 ###20201217(목)
--2교시 과제물제출
--통합구현 
--회원관리 CRUD의 Select 중에서 PageVO부터 만들기 시작할 예정
+- HRD-Net의 인증(보안)절차는 OAuth(open Authentication 오픈인증)2.0을 사용
+-스프링시큐리티와 매칭을 시켜보면, 2가지로 진행됨.
+- Authentication인증체크(페이스북,트위터,네이버아이디로그인,구글로그인 등 같은 OpenAPI인증을 사용), Authority권한체크(개발자몫)
+
+
+### 스프링 작업순서
+- 스프링 HelloWorld MVC 프로젝트 org.edu.controller 제작OK.
+- wamp(만세아이콘)으로 마리아DB(3306포트) 설치, 사용자암호 추가 및 한글처리OK.
+- 워크벤치 설치 및 ERD 작성연습, 샘플DB(edu)임포트 및 리버스 엔지니어링으로 ERD제작OK.
+- 샘플반응형 웹페이지(mobile,tablet,pc용) 및 J쿼리 페이지 작성OK.
+- 스프링 프로젝트 관리자단 AdminLTE(부트스트랩)기반으로 제작OK.
+- 스프링 테스트 pom.xml(외부라이브러리가져다가사용하는 방식) 디펜던시 의존성 추가OK.
+- 메이븐기반 전자정부표준프레임워크 egov3.9버전 -> 3.10으로 업드레이드OK.
+- junit(JavaUnit) 테스트 설정 후 기본 unit유닛(단위)테스트OK.
+- jdbc(JavaDataBaseConnection)사용 pom.xml 의존성 추가OK.
+- Mysql사용 pom.xml 의존성 추가OK.
+- 마이바티스 사용(CRUD쿼리를관리하는툴) pom.xml 의존성 추가OK.
+- junit으로 DB접근 후 관리자단 회원관리 CRUD unit테스트 마무리OK.
+- @Component애노테이션사용으로 MemberVO 인젝션사용 가능OK.
+- DB 디버그용 드라이버 사용 pom.xml 의존성 추가 후, log4jdbc.log4j2.properties 추가 OK.
+- --------------- 여기까지 ------------------
+- 실제 회원관리 화면 CRUD 적용 중 jsp중 member_list(select+검색)처리 후 페이징처리 예정.
+- 스프링 AOP(관점지향프로그래밍-OOP의 확장기능)기능으로 개발용 디버그출력환경 만들기.
+- 실제 게시판 화면 CRUD 적용.
+- 파일업로드 라이브러리 사용 pom.xml 의존성 추가.
+- 오라클로 마이그레이션 작업.
+- 이후 유효성검사, 파스타클라우드, 네이버아이디 로그인(네이버에서 제공Rest-API백엔드단) 사용 등등. pom.xml 의존성 추가.
+
+
 
 ###20201216(수)
 -인터페이스(책 목차), 임플리먼트클래스(책 내용) - 일대일 원칙 갯수 동일해야함.
