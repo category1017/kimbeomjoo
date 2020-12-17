@@ -1,8 +1,11 @@
 ###20201217(목)
-- HRD-Net의 인증(보안)절차는 OAuth(open Authentication 오픈인증)2.0을 사용
+-HRD-Net의 인증(보안)절차는 OAuth(open Authentication 오픈인증)2.0을 사용
 -스프링시큐리티와 매칭을 시켜보면, 2가지로 진행됨.
 - Authentication인증체크(페이스북,트위터,네이버아이디로그인,구글로그인 등 같은 OpenAPI인증을 사용), Authority권한체크(개발자몫)
-
+-쿼리에서 정렬방법 ASC, DESC
+-정렬기준 : 페이징처리시 bno(게시물번호) 어제함
+---------------------------------------------
+-HTML(링크드문서) 다음에 XML(자료를 저장한문서 데이터전용) 출시
 
 ### 스프링 작업순서
 - 스프링 HelloWorld MVC 프로젝트 org.edu.controller 제작OK.
