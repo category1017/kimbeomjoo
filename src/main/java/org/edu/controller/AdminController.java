@@ -160,7 +160,7 @@ public class AdminController {
 		 * 데이터 타입을 확인했음. System.out.println("list타입의 오브젝트 클래스 내용을 출력 " +
 		 * members_list.toString());
 		 */
-		List<MemberVO> members_list = memberService.selectMember(search_type,search_keyword);
+		List<MemberVO> members_list = memberService.selectMember(pageVO);
 		model.addAttribute("members", members_list);//members 2차원배열을 member_array 클래스오브젝트로 변경
 		return "admin/member/member_list";//member_list.jsp 로 members변수명으로 데이터를 전송
 	}
