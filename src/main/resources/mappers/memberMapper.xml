@@ -14,24 +14,33 @@ user_id = 'admin' where 조건에서 완전일치=이퀄
 일부분 일치는 라이크쿼리 like(LIKE) + 검색어% 사용
 앞뒤로 일치하는 LIKE쿼리를 사용할 때는  %검색어%
 user_name like 'user_2020%' -->
+<!-- 공통사용하는 쿼리 -->
+<sql id="sqlWhere">
+	<if test="search_type !='' and search_type !=null">
+		where
+		<if test="search_type == 'all'.toString()">
+				user_id like concat('%',#{search_keyword},'%')
+				or
+				user_name like concat('%',#{search_keyword},'%')
+		</if>
+		<if test="search_type == 'user_id'.toString()">
+				user_id like concat('%',#{search_keyword},'%')
+		</if>
+		<if test="search_type == 'user_name'.toString()">
+				user_name like concat('%',#{search_keyword},'%')
+		</if>
+	</if>
+</sql>
+<select id="countMember" resultType="int"> 
+select count(*) from tbl_member
+<include refid="sqlWhere"></include>
+</select>
 
 <select id="selectMember" resultType="org.edu.vo.MemberVO">
 select * from tbl_member
-<if test="search_type !='' and search_type !=null">
-	where
-	<if test="search_type == 'all'.toString()">
-			user_id like concat('%',#{search_keyword},'%')
-			or
-			user_name like concat('%',#{search_keyword},'%')
-	</if>
-	<if test="search_type == 'user_id'.toString()">
-			user_id like concat('%',#{search_keyword},'%')
-	</if>
-	<if test="search_type == 'user_name'.toString()">
-			user_name like concat('%',#{search_keyword},'%')
-	</if>
-</if>
-
+<include refid="sqlWhere"></include>
+order by reg_date desc
+limit #{queryStartNo}, #{queryPerPageNum}
 </select>
 
 <insert id="insertMember">

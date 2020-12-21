@@ -1,5 +1,40 @@
+###20201221(월)
+-로그4j에 레벨:debug< warn <info 오른쪽일수록 더 자세한 로그가 출력됨.
+
+-마리아DB실행(만세아이콘)->워크벤치실행->이클립스실행
+-통합구현 NCS학습모듈 이론 2-1단원.
+-변수변경1: 쿼리에서 사용되는 시작인덱스 startNo 변수를 queryStartNo 으로 변경예정
+-변수변경2: 쿼리에서 사용되는 1페이지당출력할개수 perQueryPageNum 변수를 queryPerPageNum 으로 변경예정
+-totalCount가 들어가는 계산식 변경(아래)
+-tempEnd*this.perQueryPageNum > this.totalCount (임시끝페이지x쿼리에서1페이지당출력할개수 > 실제전체개수)
+-this.totalCount/(double)this.queryPerPageNum (실제전체개수/쿼리에서1페이당출력할개수)
+-this.endPage*this.perQueryPageNum < this.totalCount (계산된끝페이지x쿼리에서1페이지당출력할개수 > 실제전체개수)
+-queryStartNo(쿼리시작인덱스) = perQueryPageNum*(this.page-1);//2페이지계산 10x(2-1) = 10[계산결과나온 시작페이지번호]
+-리스트 출력전 페이징 처리부터 해야 하기 때문에 selectMember호출보다 위로 이동
+-@ModelAttribute("pageVO") 원래 이것을 사용하는 목적은 jsp에서 받을 때 필요 여기선 필요없음
+-log4j.xml 로그 등급 변경 및 dtd(Document Type Define)문서타입정의를 아래로 변경예정
+-더미데이터 입력: 데이터베이스 프로시저(DB전용프로그램방식) 사용예정.
+-스프링웹프로젝트 ERD만들고, 물리DB생성 후 프로지서 사용 연습예정.(더 자세히는 7번째과목 SQL활용에서 다룹니다.)
+
+-#프로시저 : 회원관리용 더미 데이터를 생성(아래) 
+-#Mysql, 오라클에서 사용하는 프로그램을 프로시저라고함.
+-#스토어드 프로시저(Stored Procedures) 자세한 내용 7단원에서 함.
+
 ###20201218(금)
--PageVO클래스 적용하는 순서:
+-PageVO클래스 적용하는 순서:PageVO클래스 생성 -> 
+->MemberMapper쿼리수정
+->MemberDAO임플리먼트클래스 수정
+->MemberService임플리먼트클래스수정 
+->AdminController 클래스 수정-> 
+->jsp화면단 수정
+
+-조건문 중 삼항 연산자:
+(idx==pageVO.page)?'active':''; //전체3개의 항(부분)으로 만들어져서 삼항연산자라고 함.
+(조건문)?참일때:거짓일때;
+
+
+-@modelAttribute("pageVO")
+
 - 1페이지계산 5x(1-1) = 0 1페이지일때
 - 2페이지계산 5x(2-1) = 5 2페이지일때
 - SELECT * FROM tbl_board order by bno desc limit 0, 5;# 0-시작인덱스,5-출력할 개수
