@@ -132,7 +132,7 @@ $(document).ready(function() {
 					alert('중복 아이디가 존재 합니다.');
 					$(".btn-danger").attr("disabled",true);
 				}else{
-					//에러메세지출력.
+					//에러메세지출력
 					//alert(result);//개발자용
 					alert('API서버에 문제가 발생했습니다. 나중에 이용해 주세요');
 				}
