@@ -40,7 +40,8 @@
               
 				<div class="card-body">
 					<div class="form-group">
-						<label for="user_id">User_id</label> <input type="text"
+						<label for="user_id">User_id</label> 
+						<input type="text"
 							class="form-control" name="user_id" id="user_id"
 							placeholder="아이디를 입력해주세요." required>
 						<!--폼에서 input같은 입력태그에는 name속성이 반드시 필요,데이터베이스에 입력할 때 변수값을 전송하게 되늰데, 전송값을 저장하는 이름이 name가 되고 위에서는 user_id  -->
@@ -53,22 +54,21 @@
 					</div>
 
 					<div class="form-group">
-						<label for="user_name">User_Name</label> <input type="text"
+						<label for="user_name">User_Name</label> 
+						<input type="text"
 							class="form-control" name="user_name" id="user_name"
 							placeholder="이름을 입력해주세요" required>
 							<!-- 필수입력 값은 html5에서 지원하는 유효성 검사중 required 속성을 사용해서 빈(null)체크(유효성 검사)를 함. -->
 					</div>
 					<div class="form-group">
 						<label for="email">E-mail</label> 
-						<input type="email"
-							class="form-control" name="email" id="email"
+						<input type="email"	class="form-control" name="email" id="email"
 							placeholder="이메일을 입력해주세요" required>
 					</div>
 					
 					<div class="form-group">
 						<label for="point">Point</label> 
-						<input type="text"
-							class="form-control" name="point" id="point"
+						<input type="number" class="form-control" name="point" id="point"
 							placeholder="포인트를 입력해주세요" required>
 					</div>
 					
@@ -95,7 +95,7 @@
               <!-- 버튼영역 시작 -->
               <div class="card-body">
 	              <a href="/admin/member/member_list" class="btn btn-primary float-right mr-1">LIST ALL</a>
-	              <button type="submit" class="btn btn-danger float-right mr-1">SUBMIT</button>
+	              <button type="submit" class="btn btn-danger float-right mr-1" disabled>SUBMIT</button>
 	              <!-- a태그는 링크이동은 되지만, post값을 전송하지는 못합니다. 그래서 button태그를 사용 -->
              </div>
               <!-- 버튼영역  끝 -->   
@@ -114,3 +114,30 @@
 
 
 <%@ include file="../include/footer.jsp" %>
+<script>
+$(document).ready(function() {
+	$("#user_id").bind("blur", function() {
+		//alert("여기까지" + $(this).val());//디버그용
+		var p_user_id = $(this).val();
+		$.ajax({
+			type:'get',
+			url:'/id_check?user_id='+p_user_id,
+			dataType:'text',
+			success:function(result){
+				//alert('디버그' + result);
+				if(result == '0'){
+					alert('사용 가능한 아이디 입니다.');
+					$(".btn-danger").attr("disabled",false);
+				}else if(result == '1') {
+					alert('중복 아이디가 존재 합니다.');
+					$(".btn-danger").attr("disabled",true);
+				}else{
+					//에러메세지출력
+					//alert(result);//개발자용
+					alert('API서버에 문제가 발생했습니다. 나중에 이용해 주세요');
+				}
+			}
+		});
+	});
+});
+</script>

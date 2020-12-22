@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../include/header.jsp" %>
 
 <!-- 대시보드 본문 Content Wrapper. Contains page content -->
@@ -43,15 +44,17 @@
 						<label for="user_id">User_id</label> 
 					<input value="${memberVO.user_id}" type="text"
 							class="form-control" name="user_id" id="user_id"
-							placeholder="아이디를 입력해주세요." required>
+							placeholder="아이디를 입력해주세요." required readonly>
 						<!--폼에서 input같은 입력태그에는 name속성이 반드시 필요,데이터베이스에 입력할 때 변수값을 전송하게 되늰데, 전송값을 저장하는 이름이 name가 되고 위에서는 user_id  -->
 					</div>
 					
 					<div class="form-group">
-						<label for="user_pw">Password</label> 
-						<input value="${memberVO.user_pw}" type="password"
+						<label for="user_pw">Password</label>
+						<!-- html5에서 지원되는 유효성검사 maxlenth,minlength,required,type="email" -->
+						<!-- html5지원 브라우저에서만 사용가능 그래서, jquery.validator라는 자바스크립트 사용 --> 
+						<input maxlength="10" minlength="5" value="" type="password"
 							class="form-control" name="user_pw" id="user_pw"
-							placeholder="암호를 입력해주세요" required>
+							placeholder="암호를 입력해주세요">
 					</div>
 
 					<div class="form-group">
@@ -78,8 +81,8 @@
 					<div class="form-group">
 						<label for="enabled">Enabled</label> 
 						<select class="form-control" name="enabled" id="enabled">
-							<option value="0" <c:out value="${(memberVO.enabled=='0')?'selected':''}"/> >false</option>
-							<option value="1" <c:out value="${(memberVO.enabled=='1')?'selected':''}"/> >true</option>
+							<option value="0" <c:out value="${(memberVO.enabled=='false')?'selected':''}"/> >false</option>
+							<option value="1" <c:out value="${(memberVO.enabled=='true')?'selected':''}"/> >true</option>
 						</select>
 						
 					</div>
@@ -98,11 +101,12 @@
               <!-- 버튼영역 시작 -->
               <div class="card-body">
 	              <a href="/admin/member/member_list?page=${pageVO.page}" class="btn btn-primary float-right mr-1">LIST ALL</a>
+	              <a href="/admin/member/member_view?page=${pageVO.page}&user_id=${memberVO.user_id}" class="btn btn-info float-right mr-1">뒤로가기</a>
 	              <button type="submit" class="btn btn-danger float-right mr-1">수정</button>
 	              <!-- a태그는 링크이동은 되지만, post값을 전송하지는 못합니다. 그래서 button태그를 사용 -->
              </div>
               <!-- 버튼영역  끝 -->   
-            
+            <input name="page" type="hidden" value="${pageVO.page}" />
             </form>
             <!-- 폼내부에 버튼이 있어야지만, 전송버튼이 작동 됩니다. --> 
               
