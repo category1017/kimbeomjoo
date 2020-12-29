@@ -8,7 +8,7 @@ public class HelloWorldApp {
 		plusFuncABC(3,4); //플러스 함수를 실행할때 매개변수입니다. 
 	}
 
-	//메서드의 매개변수에 대해서
+	//메서드의 매개변수에 대해서.
 	public static void plusFuncABC(int a, int b){
 		System.out.println("매개변수 a + b " + (a+b) + "입니다.");
 	}
