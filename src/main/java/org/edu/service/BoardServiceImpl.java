@@ -43,4 +43,25 @@ public class BoardServiceImpl implements IF_BoardService {
 		return boardDAO.readAttach(bno);
 	}
 
+	@Override
+	public void insertBoard(BoardVO boardVO) throws Exception {
+		// 게시물 등록 DAO연결(아래)
+		boardDAO.insertBoard(boardVO);
+		
+	}
+
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		// 게시물 삭제 DAO연결(아래)
+		boardDAO.deleteBoard(bno);
+		
+	}
+
+	@Override
+	public void updateBoard(BoardVO boardVO) throws Exception {
+		// 게시물 수정 DAO연결(아래)
+		boardDAO.updateBoard(boardVO);
+		
+	}
+
 }
