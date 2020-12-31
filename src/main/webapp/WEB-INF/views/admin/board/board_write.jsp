@@ -65,9 +65,10 @@
 									<label>attach</label>
 								</div>
 								<div class="custom-file">
-									<input type="file" name="file" class="custom-file-input" id="customFile">
-									<label class="custom-file-label" for="customFile" style="color:#999;">파일첨부</label>
-								</div>
+                    <input type="file" name="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile" style="color:#999;">파일첨부</label>
+                  </div>
+								
 							</div>
 							<!-- /.card-body -->
 
@@ -100,6 +101,12 @@
 <script src="/resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
 <!-- 첨부파일 선택한 내용 출력 실행 -->
+<script>
+$(document).ready(function () {
+  bsCustomFileInput.init();
+});
+</script>
+
 <link rel="stylesheet" href="/resources/plugins/summernote/summernote.css">
 <style>
 .note-editor.note-frame.fullscreen{background:white;}

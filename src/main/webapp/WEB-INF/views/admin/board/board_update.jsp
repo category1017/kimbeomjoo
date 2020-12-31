@@ -69,6 +69,18 @@
 									<input type="file" name="file" class="custom-file-input" id="customFile">
 									<label class="custom-file-label" for="customFile" style="color:#999;">파일첨부</label>
 								</div>
+								<c:if test="${boardVO.save_file_names[0] !=null}">
+										<hr>
+										<!--horizontal 수평선 태그 -->
+										<strong><i class="fas fa-save mr-1"></i>첨부파일</strong>
+										<p class="text-muted">
+										<a href="/download?save_file_name=${boardVO.save_file_names[0]}&real_file_name=${boardVO.real_file_names[0]}">
+										${boardVO.real_file_names[0]}
+										-파일다운로드										
+										</a>
+										</p>
+									
+									</c:if>
 							</div>
 							<!-- /.card-body -->
 
@@ -101,8 +113,14 @@
 
 <!-- 첨부파일 부트스트랩 디자인 JS -->
 <script src="/resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-
 <!-- 첨부파일 선택한 내용 출력 실행 -->
+<script>
+$(document).ready(function () {
+  bsCustomFileInput.init();
+});
+</script>
+
+
 <link rel="stylesheet" href="/resources/plugins/summernote/summernote.css">
 <style>
 .note-editor.note-frame.fullscreen{background:white;}
