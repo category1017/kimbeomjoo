@@ -10,10 +10,13 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import org.edu.dao.IF_BoardDAO;
 import org.edu.service.IF_MemberService;
+import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,9 @@ public class CommonController {
 	
 	@Inject
 	IF_MemberService memberService;
+	
+	@Inject
+	IF_BoardDAO boardDAO;//첨부파일을 개별 삭제하기 위해서 인젝트 합니다. 
 	
 	
 	/**
@@ -80,7 +86,7 @@ public class CommonController {
 		this.uploadPath = uploadPath;
 	}
 	//파일 업로드 = xml에서 지정한 폴더에 실제파일 저장 : 메서드 구현(아래)
-	public String[] fileUpload(MultipartFile file) throws IOException {
+	public String fileUpload(MultipartFile file) throws IOException {
 		String realFileName = file.getOriginalFilename();//jsp에서 전송한 파일명->확장자를 구하려고 사용
 		/* 전송받은 file값 전처리 : 파일 1개일때 시작 */
 		//만약 파일이 여러개면 아래 부분에 변수처리 로직이 들어가야 합니다. 
@@ -93,11 +99,11 @@ public class CommonController {
 			//split("정규표현식");(Regular Expression): realFileName을 .으로 분할해서 배열변수로 만드는 메서드
 			//예를들면, abc.jpg -> realFileName[0] = abc, realFileName[1] = jpg으로 결과가 나온다. 
 		/*전송받은 file 값 전처리 : 파일 1개일때 끝 */
-		String[] files = new String[] {saveFileName};//saveFileName 스트링형을 배열변수 files로 형변환
+		//String[] files = new String[] {saveFileName};//saveFileName 스트링형을 배열변수 files로 형변환
 		byte[] fileData = file.getBytes();//jsp폼에서 전송된 파일이 fileData변수(메모리)에 저장됩니다. 
 		File target = new File(uploadPath, saveFileName); //파일저장하기 바로전 target이라는 설정저장.
 		FileCopyUtils.copy(fileData, target);//실제로 target폴더에 파일로 저장되는 메서드=업로드 종료
-		return files; //1개이상의 파일 업로드시 저장된 파일명을 배열로 저장한 변수	
+		return saveFileName; //copy로 업로드 이후에 저장된 real_file_name 스트링 문자열값 1개를 반환합니다.	
 	}
 
 
@@ -120,6 +126,25 @@ public class CommonController {
 		return result; //결과값은 0, 1, 에러메세지 중 하나
 	}
 
+	@Transactional
+	@RequestMapping(value="/file_delete",method=RequestMethod.POST)
+	@ResponseBody //메서드 응답을 내용만 반환 받겠다고 명시 RestAPI
+	public String file_delete(@RequestParam("save_file_name") String save_file_name) {
+		String result = "";
+		try {
+			boardDAO.deleteAttach(save_file_name);//DB에서만 지워짐.
+			//실제 폴더에서 파일도 지우기(아래)
+			File target = new File(uploadPath, save_file_name);
+			if(target.exists()) {
+				target.delete();//폴더에서 기존첨부파일 지우기
+			}
+			result = "success";
+		} catch (Exception e) {
+			result = "fail" + e.toString();
+		}
+		return result;
+	}
+	
 	public ArrayList<String> getCheckImgArray() {
 		return checkImgArray;
 	}

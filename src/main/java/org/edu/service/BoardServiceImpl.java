@@ -55,10 +55,12 @@ public class BoardServiceImpl implements IF_BoardService {
 		//첨부파일이 여러개일때 상황 대비
 		int index = 0;
 		String real_file_name = "";
-		if(save_file_names == null) {return;}
+		if(save_file_names == null) {return;} //배열첨부파일이 없으면 진행 빠져나감.
 		for(String save_file_name:save_file_names) {//첨부파일이 1개일때는 1번만 반복됩니다. 
-			real_file_name = real_file_names[index];
-			boardDAO.insertAttach(save_file_name, real_file_name);
+			if(save_file_name !=null) {//첨부파일배열에서 배열값이 있는 경우만
+				real_file_name = real_file_names[index];
+				boardDAO.insertAttach(save_file_name, real_file_name);
+			}			
 			index = index + 1;
 		}		
 	}
@@ -83,10 +85,13 @@ public class BoardServiceImpl implements IF_BoardService {
 		int index = 0;
 		String real_file_name = "";
 		if(save_file_names == null) {return;}
-		for(String save_file_name:save_file_names) {//첨부파일이 1개일때는 1번만 반복됩니다. 
-			real_file_name = real_file_names[index];
-			boardDAO.updateAttach(save_file_name, real_file_name, bno);
-			index = index + 1;
+		for(String save_file_name:save_file_names) {//첨부파일 개수만큼 반복됩니다.
+			if(save_file_name != null) {
+				real_file_name = real_file_names[index];
+				boardDAO.updateAttach(save_file_name, real_file_name, bno);
+				index = index + 1;
+			}			
+			
 		}		
 	}
 }
