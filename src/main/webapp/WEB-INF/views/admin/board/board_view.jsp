@@ -122,8 +122,8 @@
 											<!--폼에서 input같은 입력태그에는 name속성이 반드시 필요,데이터베이스에 입력할 때 변수값을 전송하게 되늰데, 전송값을 저장하는 이름이 name가 되고 위에서는 writer -->
 										</div>
 										<div class="form-group">
-											<label for="replytext">Reply Text</label> 
-											<input type="text" class="form-control" name="replytext" id="replytext" placeholder="내용을 입력해주세요." required>
+											<label for="reply_text">Reply Text</label> 
+											<input type="text" class="form-control" name="reply_text" id="reply_text" placeholder="내용을 입력해주세요." required>
 											<!--게시판에서는 폼을 전송할 때 submit 타입을 사용하지만, 댓글 Ajax로 전송하기 때문에, button타입으로 지정함.  -->
 										</div>
 										<button type="button"
@@ -134,7 +134,29 @@
 								<div class="timeline">
 								   <!-- .time-label의 before 위치 -->
 									<div class="time-label">
-										<span class="bg-red" id="btn_reply_list" style="cursor:pointer;">&nbsp;Reply List[${boardVO.reply_count}] &nbsp;</span> <!-- &nbsp  -> 공백1개를 뜻하는 특수문자 -->
+										<span data-toggle="collapse" data-target="#div_reply" class="bg-red" id="btn_reply_list" style="cursor:pointer;">&nbsp;Reply List[<span id="reply_count">${boardVO.reply_count}</span>] &nbsp;</span> <!-- &nbsp  -> 공백1개를 뜻하는 특수문자 -->
+									</div>
+									<div id="div_reply" class="collapse timeline">
+									<!-- append 토글영역 -->
+									<!-- 페이징처리 시작 -->     
+							            <div class="pagination justify-content-center">                  
+							             <ul class="pagination pageVO">
+							             <!-- 
+							              	 <li class="paginate_button page-item previous disabled" id="example2_previous">
+							              	 <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+							              	 </li>
+							              	 위 이전 게시물링크
+							              	 <li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+							              	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+							              	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+							             	 아래 다음 게시물링크 
+							              	 <li class="paginate_button page-item next" id="example2_next">
+							              	 <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+							              	 </li>
+							              -->
+							              	 </ul>
+							            </div>
+		            				<!-- 페이징처리 끝 -->
 									</div>
 									<!-- .time-label의 after위치 -->
 									<!-- <div>
@@ -154,25 +176,7 @@
 									</div> -->
 									
 								</div><!--//time-line 끝 -->
-					<!-- 페이징처리 시작 -->     
-		            <div class="pagination justify-content-center">                  
-		             <ul class="pagination pageVO">
-		             <!-- 
-		              	 <li class="paginate_button page-item previous disabled" id="example2_previous">
-		              	 <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-		              	 </li>
-		              	 위 이전 게시물링크
-		              	 <li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-		              	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-		              	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-		             	 아래 다음 게시물링크 
-		              	 <li class="paginate_button page-item next" id="example2_next">
-		              	 <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-		              	 </li>
-		              -->
-		              	 </ul>
-		            </div>
-		            <!-- 페이징처리 끝 -->
+					
 							</div>
 							<!-- 댓글영역 끝 -->
 						</div>
@@ -241,82 +245,188 @@ var printPageVO = function(pageVO, target) {
 
 }
 </script>
+<!-- 화면을 재구현Representation하는 함수(아래) -->
+<script>
+var printReplyList = function(data, target, templateObject) {
+	var template = Handlebars.compile(templateObject.html());//html태그로 변환
+	var html = template(data);//빅데이터를 리스트템플릿에 바인딩 결합시켜주는 역할. 변수html에 저장되었음.
+	$(".template-div").remove();//화면에 보이는 댓글리스트만 지우기.
+	//target.after(html);//target은 .time-label 클래스영역을 가리킵니다. after는 외부내용추가
+	//target.append(html);//target은 #div_reply 아이디영역을 가리킵니다. append 내부내용추가 기존내용에 뒤에 붙이기
+	target.prepend(html);//prepend 내부내용추가시 기존내용의 앞에 추가합니다.
+};
+</script>
+<!-- btn_reply_list버튼에 적용한 ajax로 댓글 리스트를 구하는 함수를 외부로 뺍니다. -->
+<!-- 외부로 함수를 빼는 이유는 btn_reply_list버튼에 토글기능을 적용되서, 토글기능과 Ajax기능을 분리하는 목적  -->
+<script>
+var replyList = function() {
+	var page = $("#reply_page").val();
+	//alert('선택한 페이지 값은 ' + page);//디버그
+	$.ajax({ //$.getJSON 으로 대체 해도 됩니다.
+		type:"post",
+		url:"/reply/reply_list/${boardVO.bno}/"+page,//116게시물번호에 대한 댓글목록을 가져오는 URL
+		dataType:"json",//받을때 json데이터를 받는다.
+		success:function(result) {//result에는 댓글 목록을 json데이터로 받음.
+			//alert("디버그" + result);
+			if(typeof result=="undefined" || result=="" || result==null) {
+				$("#div_reply").empty();//조회된 값이 없을때, 화면내용 클리어.
+				alert("조회된 값이 없습니다.");
+			}else{
+				//빵틀에 result데이터를 바인딩해서 출력합니다.
+				//console.log(result);
+				//var result = JSON.parse(result);//dataTayp:'text' 일때 실행 텍스트자료를 제이슨 자료로 변환.
+				//console.log("여기까지" + result.replyList);//디버그용 
+				printReplyList(result.replyList, $("#div_reply"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
+				printPageVO(result.pageVO, $(".pageVO"));//result.pageVO데이터를 .pageVO클래스영역에 파싱합니다.
+			}
+		},
+		error:function(result) {
+			alert("RestApi서버에 문제가 발생했습니다. 다음에 이용해 주세요");
+		}
+	});
+}
+</script>
 <script>
 /* 위 댓글 페이징에서 링크 태그의 페이지 이동을 방지하고, btn_reply_list 버튼을 클릭해서 
  /reply/reply_list/${boardVO.bno}/{1} -> 링크한 페이지값으로 대체해서 실행하는 역할하는 코드 (아래)
 */
-*$(document).ready(function(){
+$(document).ready(function(){
 	$(".pageVO").on("click", "li a", function(event){
 		event.preventDefault();//a태그의 기본기능인 이동기능을 막겠다는 명령.
 		var page = $(this).attr("href");//현재 클릭한 페이지 
 		//alert(page);//디버그
 		$("#reply_page").val(page);
-		$("#btn_reply_list").click();//페이징번호에서 해당되는 번호를 클릭했을때, btn_reply_list버튼을 클릭
+		//$("#btn_reply_list").click();//페이징번호에서 해당되는 번호를 클릭했을때, btn_reply_list버튼을 클릭
+		//위 버튼을 클릭하면 토글기능이 작동되기 때문에 댓글 목록만 가져오는 replyList함수를 실행(아래)
+		replyList();
 	});
 });
 </script>
-<!-- 화면을 재구현Representation하는 함수(아래) -->
-<script>
-var printReplyList = function(data, target, templateObject) {
-	var template = Handlebars.compile(templateObject.html());//html태그로 변환
-	var html = template(data);//빅데이터를 리스트 템플릿에 바인딩 결합시켜주는 역할. 변수html에 저장되었음.
-	$(".template-div").remove();//현재 화면에 보이는것만 지우기(댓글리스트)
-	target.after(html);//target은 .time-label 클래스영역을 가리킴
-};
-</script>
+
 <!-- 댓글 리스트 버튼 클릭시 Ajax RestApi 컨트롤러 호출(아래)해서 댓글목록 Json데이터로 -->
 <script>
 $(document).ready(function(){
-	$("#btn_reply_list").on("click", function(){
+	$("#btn_reply_list").on("click", function(){//부트스트랩의 토글기능이 자동적용
 		//alert('디버그');
-		var page = $("#reply_page").val();
-		//alert('선택한 페이지 값은 ' + page);//디버그
-		$.ajax({ //$.getJSON 으로 대체 해도 됩니다.
-			type:"post",
-			url:"/reply/reply_list/${boardVO.bno}/"+page,//116게시물번호에 대한 댓글목록을 가져오는 URL
-			dataType:"json",//받을때 json데이터를 받는다.
-			success:function(result) {//result에는 댓글 목록을 json데이터로 받음.
-				//alert("디버그" + result);
-				if(typeof result=="undefined" || result=="" || result==null) {
-					alert('조회된 값이 없습니다.');
-				}else{
-					//빵틀에 result데이터를 바인딩해서 출력합니다.
-					//console.log(result);
-					//var result = JSON.parse(result);//dataTayp:'text' 일때 실행 텍스트자료를 제이슨 자료로 변환.
-					//console.log("여기까지" + result.replyList);//디버그용 
-					printReplyList(result.replyList, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
-					printPageVO(result.pageVO, $(".pageVO"));//result.pageVO데이터를 .pageVO클래스 영역에 파싱합니다.
+			replyList();//댓글리스트를 Ajax로 호출하는 함수 실행.
+	});
+});
+</script>
+<!-- 댓글 삭제 버튼 액션 처리(아래) -->
+<script>
+$(document).ready(function(){
+	$("#deleteReplyBtn").on("click", function(){
+		var rno = $("#rno").val();//삭제할 댓글 번호 값 변수
+		//alert("선택한 댓글 번호는 : " + rno);//디버그용
+		$.ajax({
+			type:"delete",
+			url:"/reply/reply_delete/${boardVO.bno}/"+rno,
+			dataType:"text",//반환값 문자열
+			success:function(result){
+				if(result=="success"){
+					alert("삭제가 성공 되었습니다.");
+					var reply_count = $("#reply_count").text();//$("영역").val(input데이터),
+					$("#reply_count").text(parseInt(reply_count)-1);//$("영역").text(영역안쪽의문자열)
+					replyList();//댓글리스트 메서드호출
+					$("#replyModal").modal("hide");//모달창(팝업창)숨기기
 				}
 			},
-			error:function(result) {
-				alert("RestApi서버에 문제가 발생했습니다. 다음에 이용해 주세요!");
+			error:function(result){
+				alert("RestAPI서버오류로 삭제에 실패했습니다.");
+			}			
+		});
+	});
+});
+</script>
+<!-- 댓글 수정 버튼 액션 처리(아래) -->
+<script>
+$(document).ready(function() {
+	$("#updateReplyBtn").on("click", function(){
+		var rno = $("#rno").val();//모달창의 input태그값 변수지정
+		var reply_text_modal = $("#reply_text_modal").val();//모달창의 input태그값 변수지정
+		$.ajax({
+			type:"patch",
+			url: "/reply/reply_update",
+			headers:{
+				"Content-Type":"application/json",
+				"X-HTTP-Method-Override":"PATCH"				
+			},
+			data:JSON.stringify({//json데이터로 변환해서 RestAPI서버로 전송
+				reply_text:reply_text_modal,
+				rno:rno
+			}),
+			dataType:"text", //RestAPI에서 반환되는 값
+			success:function(result){
+				if(result=="success"){ //=대입, ==비교, ===비교(타입포함) ex, 1==="1"은 다름
+					alert("수정에 성공하였습니다");
+					$("#replyModal").modal("hide");
+					replyList();
+				}
+			},
+			error:function(){
+				alert("RestAPI서버에 문제가 있습니다.");
+				
 			}
 		});
 	});
 });
 </script>
-
 <!-- 댓글 등록 버튼 액션 처리(아래) -->
 <script>
 $(document).ready(function() {
 	$("#insertReplyBtn").on("click", function(){//댓글등록버튼을 클릭했을 때 구현내용(아래)
 		//alert("디버그");
 		//Ajax를 이용해서, 화면을 Representation (REST-API 방식) 부분 화면을 재구현(아래)
+		//RestAPI서버단에 보낼 변수값 정의
+		var bno = "${boardVO.bno}";//자바EL 변수값
+		var reply_text = $("#reply_text").val();//댓그폼 input 태그값
+		var replyer = $("#replyer").val();//댓글폼 input 태그값
+		//alert(bno+ ":"+ reply_text + ":" + replyer);//디버그)
+		//return false;//디버그 강제 중지
+		if(reply_text == "" || replyer == ""){
+			//boolean타입 1+0=1, 1+1=1, 0+1=1   조건문 ||=or(+ 둘중에 하나라도 true이면 모두 true)
+			//boolean타입 1*0=0, 1*1=1, 0*1=0   조건문 && = and (* 두개다 true이어야만 모두 true)
+			alert("댓글내용과 댓글작성자 입력은 필수입니다.");
+			return false;
+		}
 		$.ajax({//통신프로그램
 			//여기부터는 프론트 엔드 개발자 영역
 			type:'post',//지금은 html이라서 get방식이지만, jsp로가면 post방식으로 바뀌어야함
 			url:'/reply/reply_write', //jsp로 가면, ReplyController에서 지정한 url로 바뀌어야함.
 			dataType:'text',//ReplyController에서 받은 데이터의 형식은 text형식으로 받겠다고 명시.
+			headers:{
+				"Content-Type":"application/json",
+				"X-HTTP-Method-Override":"POST"
+			},
+			data:JSON.stringify({
+				bno:bno,
+				reply_text:reply_text,
+				replyer:replyer
+			}),
 			success:function(result) { //통신응답이 성공하면 (상태값 200ok)위 경로에서 반환받은 result (json텍스트 데이터)를 이용해서 화면을 재구성.
-				alert(result);
+				//alert(result);//디버그용
 				//지금은 html이라서 result값을 이용할 수가 없어서 댓글 더미데이터를 만듦.(아래)
+				/*
 				result = [
 					//{rno:댓글번호,bno:게시물번호,replytext:"첫번째 댓글", replyer:"admin", regdate:타임스탬프}
 					{rno:1,bno:15,reply_text:"첫번째 댓글", replyer:"admin",reg_date:1601234512345},//첫번째 댓글 데이터
 					{rno:1,bno:15,reply_text:"두번째 댓글", replyer:"user02",reg_date:1601234512345}//두번째 댓글 데이터
-				];//위 URL이 공공데이터생각하면,위 데이터를 화면에 구현하면, 빅데이터의 시각화로 불리게 됩니다.
+				];
+				*/
+				//위 URL이 공공데이터생각하면,위 데이터를 화면에 구현하면, 빅데이터의 시각화로 불리게 됩니다.
 				//printReplyList(빅데이터, 출력할 타겟 위치, 빅데이터를 가지고 바인딩된-묶인 템플릿화면);
-				printReplyList(result, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
+				//printReplyList(result, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
+				//입력이 success된 후에 페이지는 댓글개수1증가+ 1페이지로 가고, replyList()댓글 목록 호출
+				var reply_count = $("#reply_count").text();//$("영역").val(input데이터),
+				//alert(reply_count);//디버그
+				$("#reply_count").text(parseInt(reply_count)+1)//$("영역").text(영역안쪽의 문자열)
+				$("#reply_page").val("1");
+				replyList();
+				$("#replyer").val("");
+				$("#reply_text").val("");
+			},
+				error:function(result){
+					alert("RestAPI서버가 작동하지 않습니다.");
 			}
 		});
 	} );
@@ -329,7 +439,7 @@ $(document).ready(function() {
 		//$(this);//클릭한 댓글에 따라서 this는 첫번째 댓글일 수도, 두번째 댓글일 수도 있다.
 		$("#rno").val($(this).attr("data-rno"));
 		$(".modal-title").html($(this).find(".timeline-header").text());		
-		$("#replytext").val($(this).find(".timeline-body").text());
+		$("#reply_text_modal").val($(this).find(".timeline-body").text());
 		//alert("디버그 "+ $(this).find(".timeline-body").text());
 		//마우스클릭으로 선택한 댓글의 .timeline-body 영역의 text문자를 
 		//모달창의 #replytext영역에 값으로 입력하겠음.
@@ -348,7 +458,7 @@ $(document).ready(function() {
       </div>
       <div class="modal-body">
         <input type="hidden" name="rno" id="rno" value="">
-		<input type="text" class="form-control" name="replytext" id="replytext" placeholder="내용을 입력해주세요." >
+		<input type="text" class="form-control" name="reply_text_modal" id="reply_text_modal" placeholder="내용을 입력해주세요." >
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
