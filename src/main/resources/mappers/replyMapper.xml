@@ -35,7 +35,7 @@ delete from tbl_reply
 where rno = #{rno}
 </delete>
 
-<delete id="deleteReplyALL">
+<delete id="deleteReplyAll">
 delete from tbl_reply where bno = #{bno}
 </delete>
 
