@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -42,11 +41,11 @@ $(document).ready(function() {
 			<p class="openMOgnb"><a href="#"><b class="hdd">메뉴열기</b> <span></span><span></span><span></span></a></p>
 			<div class="header_cont">
 				<ul class="util clear">
-					<li><a href="/login">로그인</a></li>
-					<li><a href="join.html">회원가입</a></li>
+					<li><a href="/login.html">로그인</a></li>
+					<li><a href="/join">회원가입</a></li>
 					<!-- 로그인 후 보이는 메뉴(아래) -->
 					<li><a href="#">000님 환영합니다.</a></li>
-					<li><a href="mypage.html">마이페이지</a></li>
+					<li><a href="/member/mypage">마이페이지</a></li>
 					<li><a href="/admin">AdminLTE</a></li>
 				</ul>	
 				<nav>
