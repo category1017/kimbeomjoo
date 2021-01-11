@@ -17,8 +17,15 @@ public class ControllerAdviceException {
 		//AdminController에서 사용한 Model클래스는 jsp로 값을 보낼 때 변수.
 		//여기서 사용한 ModelAndView클래스는 jsp로 값을 보내고, 반환값으로 model값을 보낼 jsp경로도 지정
 		//Model값을 보낼 jsp경로 지정하는 명령은 셋뷰네임 입니다.
-		modelAndView.setViewName("home/error");//반환할 jsp위치 지정.
-		
-		return null;
+		modelAndView.setViewName("home/spring_error");//반환할 jsp위치 지정.
+		modelAndView.addObject("exception", ex);
+		//model.addAttribute("error_message",ex); //model과 modelAndView의 차이
+		//return "home/error";
+		String referer = request.getHeader("Referer");//이전페이지로 이동할때 필요한 링크값=크롬에서 확인가능한 header값
+		request.getSession().setAttribute("prevPage", referer);
+		//세션은 클라이언트가 서버에 접속시 서버에서 발생하는 고유변수값을 세션이라고 하고, prevPage세션키를 하나 생성(위 내용)
+		//세션에 저장된 prevPage키를 jsp에서 사용하게 됩니다. 
+		//결과로 jsp에서 사용가능한 변수 2가지 : object변수 (클래스변수)인  exception, 세션변수인 prevPage
+		return modelAndView;
 	}
 }
