@@ -259,6 +259,7 @@ border:0px;
 }
 .submit-btn {
 margin-top:10px;
+margin-bottom: 15px;
 text-align:right;/*div영역 안쪽의 내용을 좌우 가운데 정렬시키는 명령*/
 }
 /* CONTACT 영역 끝 */
