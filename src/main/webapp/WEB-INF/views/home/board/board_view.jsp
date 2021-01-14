@@ -80,11 +80,11 @@
 	          <div class="card-header">
 	            <h5 class="card-title">Add New Reply</h5>
 	          </div>
-	          <form action="board_view.html" name="reply_form" method="post">
+	          <form action="#" name="reply_form" method="post">
 	          <div class="card-body">
 	          	<div class="form-group">
-                   <label for="writer">Writer</label>
-                   <input type="text" class="form-control" name="writer" id="writer" placeholder="작성자를 입력해 주세요." required>
+                   <label for="replyer">Writer</label>
+                   <input type="text" class="form-control" name="replyer" id="replyer" placeholder="작성자를 입력해 주세요." required>
                    <!-- 폼에서 input같은 입력태그에는 name속성이 반드시 필요, 이유는 DB에 입력할때,
                    	 값을 전송하게 되는데, 전송값을 담아두는 이름이 name가 되고, 위에서는 writer 입니다. -->
                 </div>
@@ -99,7 +99,7 @@
 	          <div class="timeline">
 	          	  <!-- .time-label의 before 위치 -->
 		          <div class="time-label">
-	                <span data-toggle="collapse" data-target="#div_reply" class="bg-red btn" id="btn_reply_list">Reply List [${boardVO.reply_count}]&nbsp;&nbsp;</span>
+	                <span data-toggle="collapse" data-target="#div_reply" class="bg-red btn" id="btn_reply_list">Reply List&nbsp;[<span id="reply_count">${boardVO.reply_count}</span>]&nbsp;&nbsp;</span>
 	              </div>
 	              <div id="div_reply" class="timeline collapse">
 	              
@@ -213,29 +213,125 @@ $(document).ready(function(){
 	});
 });
 </script>
+<!-- 댓글 수정 버튼 액션 처리(아래) -->
+<script>
+$(document).ready(function(){
+	$("#updateReplyBtn").on("click",function(){
+		if("${session_enabled}" ==""){
+			alert("회원만 댓글 수정이 가능합니다.");
+			location.href("/login");
+			return false;
+		}
+		var reply_text = $("#replytext").val();//get
+		var rno = $("#rno").val();//get
+		$.ajax({
+			type:"patch",
+			url:"/reply/reply_update",
+			headers:{
+				"Content-Type":"application/json",
+				"X-HTTP-Method-Override":"PATCH"
+			},
+			data:JSON.stringify({
+				rno:rno,
+				reply_text:reply_text
+									
+			}),	
+			dataType:"text",
+			success:function(result){
+				if(result=="success"){
+				alert("댓글 수정이 성공했습니다!")
+				$("#replyModal").modal("hide");
+				replyList();//댓글 수정 후 댓글리스트 재호출(실행)
+				}else{
+					alert("댓글 수정이 실패하였습니다.");
+				}
+			},
+			error:function(){
+				alert("RestAPI서버가 작동하지 않습니다.")
+			}
+		});
+	});
+});
+</script>
+<!-- 댓글 삭제 버튼 액션 처리(아래) -->
+<script>
+$(document).ready(function(){
+	$("#deleteReplyBtn").on("click",function(){
+		if("${session_enabled}" ==""){
+			alert("회원만 댓글 삭제가 가능합니다.");
+			location.href("/login");
+			return false;
+		}
+		var rno = $("#rno").val();
+		$.ajax({
+			type:"delete",
+			url:"/reply/reply_delete/${boardVO.bno}/"+rno,
+			dataType:"text",
+			success:function(result){
+				if(result=="success"){
+					alert("댓글 삭제가 성공했습니다!");
+					var reply_count = $("#reply_count").text();//get
+					$("#reply_count").text(parseInt(reply_count)-1);//set
+					replyList();//삭제후 댓글 리스트 재실행.
+					$("#replyModal").modal("hide");
+				}else{
+					alert("댓글 삭제가 실패했습니다.");
+				}
+			},
+			error:function(result){
+				alert("RestAPI 서버가 작동하지 않습니다.");
+			}
+		});
+	});
+});
+</script>
 <!-- 댓글 등록 버튼 액션 처리(아래) -->
 <script>
 $(document).ready(function() {
 	$("#insertReplyBtn").on("click", function() {//댓글등록버튼을 클릭했을 때 구현내용(아래)
+		if("${session_enabled}" == ""){//버튼클릭시 비로그인시 로그인 화면으로 유도
+			alert("회원만 댓글 등록이 가능합니다. ");
+			location.href("/login");//자바스크립트 내장함수
+			return false;
+		}
 		//alert("디버그");
 		//Ajax를 이용해서, 화면을 Representation (REST-API방식) 부분 화면을 재구현(아래)
-		$.ajax({//통신프로그램
+		var bno = "${boardVO.bno}";
+		var reply_text = $("#reply_text").val();//input type은 val()함수로 입력값을 가져올 수 있음.
+		var replyer = $("#replyer").val();
+		if(reply_text=="" || replyer =="" ){
+			alert("댓글내용, 작성자는 필수 입력사항 입니다. ");
+			return false;
+		}
+		$.ajax({//통신프로그램:J쿼리에서 내장된 함수ajax({}); 비동기통신특징(Http동기통신-웹페이지의 단점을 해소 Ajax)
+		//최초로 상용화 적용되었던 곳이 파일 업로드/다운로드에 Ajax기능이 적용되었습니다. 
+		//서버(restAPI서버=컨트롤러)-클라이언트(PC브라우저ajax=jsp단,화면단)
 			//여기서부터는 프론트 엔드 개발자 영역
-			type:'get',//지금은 html이라서 get방식이지만, jsp로가면, post방식으로 바꿔야 합니다.
-			url:'board_view.html',//jsp로 가면, ReplyController 에서 지정한 url로 바꿔야 합니다.
-			dataType:'text',//ReplyController에서 받은 데이터의 형식은 text형식으로 받겠다고 명시.
+			type:'post',//지금은 html이라서 get방식이지만, jsp로가면, post방식으로 바꿔야 합니다.
+			url:'/reply/reply_write',//jsp로 가면, ReplyController 에서 지정한 url로 바꿔야 합니다.
+			headers:{
+				"Content-Type":"application/json",
+				"X-HTTP-Method-Override":"POST"
+			},
+			data:JSON.stringify({
+				bno:bno,
+				reply_text:reply_text,
+				replyer:replyer
+			}),//RestAPI서버컨트롤러로 보내는 JSON값
 			success:function(result) {//응답이 성공하면(상태값200)위경로에서 반환받은 result(json데이터)를 이용해서 화면을 재구현
-				//지금은 html이라서 result값을 이용할 수가 없어서 댓글 더미데이터를 만듭니다.(아래)
-				result = [
-					//{rno:댓글번호,bno:게시물번호,replytext:"첫번째 댓글",replyer:"admin",regdate:타임스탬프}
-					{rno:1,bno:15,replytext:"첫번째 댓글",replyer:"admin",regdate:1601234512345},//첫번째 댓글 데이터
-					{rno:2,bnt:15,replytext:"두번째 댓글",replyer:"admin",regdate:1601234512345}//두번째 댓글 데이터
-				];//위 URL이 공공데이터생각하면,위 데이터를 화면에 구현하면, 빅데이터의 시각화로 불리게 됩니다.
-				//printReplyList(빅데이터, 출력할 타켓위치, 빅데이터를 가지고 바인딩된-묶인 템플릿화면);
-				printReplyList(result, $(".time-label"), $("#template"));//화면에 출력하는 구현함수를 호출하면 실행.
-			} 
+				var reply_count = $("#reply_count").text();//get
+				$("#reply_count").text(parseInt(reply_count)+1);//set
+				//댓글 3페이지를 보고 있다가 , 댓글 입력했을때, 본인 작성할 댓글 바로 확인 가능하도록 1페이지로 가도록 유도
+				$("#reply_page").val("1");//1페이지 값으로 set
+				replyList();//댓글입력 후 리스트 출력함수 호출(실행)
+				$("#replyer").val("");//input박스의
+				$("#reply_text").val("");
+			},
+			error:function(result){
+				alert("RestAPI서버가 작동하지 않습니다.");
+			}
 		});
-	} );
+	});
 });
 </script>
 <!-- 댓글리스트에서 수정 버튼을 클릭했을때, 팝업창이 뜨는데, 그 팝업창에 내용을 동적으로 변경시켜주는 구현(아래)  -->
@@ -268,8 +364,8 @@ $(document).ready(function() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">수정</button>
-        <button type="button" class="btn btn-danger">삭제</button>
+        <button type="button" class="btn btn-primary" id="updateReplyBtn">수정</button>
+        <button type="button" class="btn btn-danger"id="deleteReplyBtn">삭제</button>
       </div>
     </div>
   </div>
