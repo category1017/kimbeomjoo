@@ -162,6 +162,10 @@ public class DataSourceTest {
 		//Connection connection = dataSource.getConnection();//root-context사용
 		Connection connection = null;
 		connection = DriverManager.getConnection("jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db","sa","");
+		/**
+		 * mysql(MariaDB)
+		 * .getConnection("");
+		 */
 		//직접 쿼리를 날립니다.(아래)
 		Statement stmt = connection.createStatement();
 		/* 인서트 쿼리실행(아래) 
@@ -172,7 +176,7 @@ public class DataSourceTest {
 		}
 		*/
 		/* 셀렉트 쿼리실행(아래) */
-		ResultSet rs = stmt.executeQuery("select * from tbl_board");
+		ResultSet rs = stmt.executeQuery("select * from tbl_board order by bno desc" );
 		System.out.println("번호\t\t제목\t\t내용\t\t작성자");
 		while(rs.next()) {
 			System.out.print(rs.getString("bno"));
