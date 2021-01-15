@@ -3,19 +3,25 @@ package org.edu.test;
 import static org.junit.Assert.*;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.edu.dao.IF_BoardDAO;
 import org.edu.dao.IF_MemberDAO;
+import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
 import org.edu.vo.PageVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -40,15 +46,28 @@ public class DataSourceTest {
 	@Inject
 	IF_MemberDAO memberDAO;
 	
+	@Inject
+	IF_BoardDAO boardDAO;
+	
 	@Inject//사용하면 안되는 이유: 클래스상단에 @Controller, @Service, @Repository, @Component 이런내용만 @Inject합니다.
 	MemberVO memberVO; //기존 자바처럼 new MemberVO() 오브젝트를 생성하지 않고, 주입해서 사용.
 	
-	public String memberPrimaryKey() {
-		//사용자 프라이머리키 생성하는 메서드 년월시분초 + 밀리초
+	public String memberPrimaryKey() throws Exception {
+		//사용자 프라이머리키 생성하는 메서드 년월시분초 + 밀리초 -> countMember로 변경(대량더미데이터 입력시 Uniq에러 발생으로 인해)
+		/*
 		Date primaryKey = new Date();
 		SimpleDateFormat newFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");		
 		System.out.println("프라이머리키 : " + newFormat.format(primaryKey));
-		return "user_" + newFormat.format(primaryKey);
+		return "dummy_" + newFormat.format(primaryKey);
+		*/
+		PageVO pageVO = new PageVO();
+		pageVO.setPage(1);
+		pageVO.setPerPageNum(8);//리스트하단에 보이는 페이징번호의 개수
+		pageVO.setQueryPerPageNum(10);//쿼리에서 1페이지당 보여줄 게시물수 10개로 입력 놓았습니다.
+		//검색된 전체 게시물수 구하기 서비스 호출
+		int countMember = 0;
+		countMember = memberDAO.countMember(pageVO);
+		return "dummy_" + (countMember+1);
 	}
 	
 	@Test
@@ -83,23 +102,41 @@ public class DataSourceTest {
 	}
 	
 	@Test
+	public void insertBoard() throws Exception {
+		BoardVO boardVO = new BoardVO();
+		boardVO.setTitle("더미게시물");
+		boardVO.setContent("더미 내용입니다.");
+		boardVO.setWriter("일반사용자");
+		//boardVO.setBno(primarykey);
+		for(int cnt=0;cnt<=100;cnt++) {//더미게시물 100개 입력
+			boardDAO.insertBoard(boardVO);
+		}
+		
+	}
+	
+	@Test
 	public void insertMember() throws Exception {
 		//CRUE 중 Create 테스트
 		//MemberVO memberVO = new MemberVO();
 		//사용자 생성 규칙 : user_ 시작(prefix), 접미사(suffix)는 년월일시분초
 		//사용자 생성 결과 예 : user_20201215151432
-		String memberIdKey = memberPrimaryKey();
-		memberVO.setUser_id(memberIdKey);
+		//String memberIdKey = memberPrimaryKey();
+		
 		memberVO.setUser_name("사용자03");
-		//패스워드 암호화 처리(필수)-> 나중에 스프링 시큐리티할 때 처리 예정
-		memberVO.setUser_pw("1234");
+		//패스워드 암호화 처리(필수)-> 스프링 시큐리티 엔코더처리 아래
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		memberVO.setUser_pw(passwordEncoder.encode("1234"));
 		memberVO.setEmail("user03@abc.com");
 		memberVO.setPoint(100);
 		memberVO.setEnabled(true);
 		memberVO.setLevels("ROLE_USER");
 		Date reg_date = new Date();
 		memberVO.setReg_date(reg_date);//메퍼쿼리에서 처리로 대체
-		memberDAO.insertMember(memberVO);
+		for(int cnt=0;cnt<=100;cnt++) {//더비데이터 100명입력
+			memberVO.setUser_id(memberPrimaryKey());
+			memberDAO.insertMember(memberVO);
+		}
+		
 	}
 	
 	@Test
@@ -118,6 +155,24 @@ public class DataSourceTest {
 		System.out.println("회원리스트 테스트 입니다.");
 		System.out.println(memberList.toString());
 		
+	}
+	
+	@Test
+	public void oldSelectTest() throws Exception {
+		Connection connection = dataSource.getConnection();
+		//직접 쿼리를 날립니다. (아래)
+		Statement stmt = connection.createStatement();
+		ResultSet rs = stmt.executeQuery("select * from tbl_board");
+		System.out.println("제목|t|t내용|t|t작성자");
+		while(rs.next()) {
+			System.out.print(rs.getString("title"));
+			System.out.print(rs.getString("content"));
+			System.out.print(rs.getString("writer"));
+			System.out.println();
+		}
+		if(rs !=null)rs.close();
+		if(stmt !=null)stmt.close();
+		if(connection !=null)connection.close();
 	}
 	
 	@Test
