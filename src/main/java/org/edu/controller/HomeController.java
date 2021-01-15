@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * Handles requests for the application home page. 
  * 앱을 위한 홈페이지 요청 처리한다(아래) http://localhost:8080/ 요청을 받았을때, 변수를 만들어서 크롬화면 또는 콘솔에 뿌려준다.
@@ -77,14 +79,44 @@ public class HomeController {
 			return "home/board/board_view";
 		}
 	
+	@RequestMapping(value="/home/board/board_update",method=RequestMethod.GET)
+	public String board_update(Model model, @ModelAttribute("pageVO") PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
+		BoardVO boardVO = boardService.readBoard(bno);
+		//콘텐츠 내용 시큐어 코딩 처리
+		String xssData = securityCode.unscript(boardVO.getContent());
+		boardVO.setContent(xssData);
+		//첨부파일처리는 다음주에 
+		model.addAttribute("boardVO", boardVO);
+		
+		return "home/board/board_update";
+	}
+	
 	//사용자 홈페이지 게시판 쓰기 매핑(POST) 오버로드(매개변수의 개수 또는 타입이 다른)메서드 이용
 	//jsp에서 board_write메서드를 호출합니다. ->호출할때 폼의 필드값을 컨트롤러로 보냅니다. 
 	//컨트롤러에서 받을때 사용하는 매개변수 BoardVO boardVO입니다.
 	//위에서 받은 boardVO를 DAO에서 받아서 DB테이블에 쿼리명령으로 입력합니다. 
 	@RequestMapping(value="/home/board/board_write",method=RequestMethod.POST)
-	public String board_write(BoardVO boardVO) throws Exception {
+	public String board_write(RedirectAttributes rdat,@RequestParam("file") MultipartFile[] files, BoardVO boardVO) throws Exception {
 		//위에서 받은 boardVO를 서비스로 보내기.
-		return "redirect:/home/board/board_view";
+		//첨부파일 저장할 배열변수 선언
+		String[] save_file_names = new String[files.length];
+		String[] real_file_names = new String[files.length];
+		int index = 0;
+		for(MultipartFile file:files) {
+			if(file.getOriginalFilename() != "") {
+			save_file_names[index] = commonController.fileUpload(file);//UUID 고유값
+			real_file_names[index] = file.getOriginalFilename();//파일의 진짜 이름 예를들면 한글파일명
+			}
+			index =  index + 1;
+		}
+		
+		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);
+		
+		boardService.insertBoard(boardVO);
+		rdat.addFlashAttribute("msg", "저장");
+		
+		return "redirect:/home/board/board_list";//실제 DB에 인서트
 	}
 	
 	//사용자 홈페이지 게시판 쓰기 매핑(GET)
