@@ -161,7 +161,7 @@ public class DataSourceTest {
 	public void oldQueryTest() throws Exception {
 		//Connection connection = dataSource.getConnection();//root-context사용
 		Connection connection = null;
-		connection = DriverManager.getConnection("jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db","sa","");
+		connection = DriverManager.getConnection("jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false" + "","sa","");
 		/**
 		 * mysql(MariaDB)
 		 * .getConnection("");
