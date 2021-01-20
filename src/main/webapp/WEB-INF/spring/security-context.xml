@@ -17,12 +17,12 @@
 		<security:concurrency-control max-sessions="3" error-if-maximum-exceeded="false" />
 	</security:session-management>
 	<!-- 특정 url 패턴에 해당하는 권한 부여(아래) -->
-	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-	<security:intercept-url pattern="/**/*_write" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" method="GET" />
-	<security:intercept-url pattern="/**/*_update" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"  />
-	<security:intercept-url pattern="/**/*_delete" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"  />
-	<security:intercept-url pattern="/**/member/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
-	<security:intercept-url pattern="/**" access="permitAll"  />
+	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_write" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" method="GET"/>
+	<security:intercept-url pattern="/**/*_update" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_delete" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/member/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**" access="permitAll"/>
 	<security:csrf disabled="true"/>
 	<security:form-login
 		login-page="/login"
@@ -30,7 +30,7 @@
 		always-use-default-target="true"
 		default-target-url="/login_success"
 		authentication-failure-url="/login?msg=fail"
-		username-parameter="user_id" 
+		username-parameter="user_id"
 		password-parameter="user_pw"
 	/>
 	<security:remember-me key="remember-key" token-validity-seconds="604800" remember-me-parameter="remember-me-parameter" />
