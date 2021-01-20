@@ -74,7 +74,6 @@ public class LoginController {
 		System.out.println(bcryptPassword);//테스트시 이 암호를 DB회원테이블에 입력하면 됩니다.
 		System.out.println("2가지 스트링을 매칭 참,거짓: " + bcryptPasswordEncoder.matches(rawPassword, bcryptPassword));
 
-
 		return "home/login";
 	}
 }

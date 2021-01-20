@@ -73,8 +73,8 @@
 			<value></value>
 		</list>
 	</property>
-	</bean>  -->
-	 
+	</bean> 
+	  -->
 		
 	<!-- 로컬 mysql log4jdbc 설정전 -->
 	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
