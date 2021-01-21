@@ -4,6 +4,14 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sectoken" %>
 <%@ include file="include/header.jsp" %>
 <link rel="stylesheet" href="/resources/home/css/board.css"> 
+<style>
+.btn_snsLogin{
+	background-color:#1EC800;
+}
+@media all and (min-width:801px){
+	.btn_snsLogin {width:230px;}
+}
+</style>
 <script>
 if("${param.msg}" =="fail"){
 	alert('로그인에 실패하였습니다. 이유는 ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}');
@@ -15,6 +23,8 @@ $(document).ready(function(){
 	$("input[name='user_id']").focus();//페이지로딩시 첫번째 입력위치로 이동
 });
 </script> 
+<!-- 네이버에서 제공하는 외부라이브러리 (아래)-->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 	<!-- 메인콘텐츠영역 -->
 	<div id="container">
 		<!-- 메인상단위치표시영역 -->
@@ -54,13 +64,12 @@ $(document).ready(function(){
 							<label for="password_lbl" class="tit_lbl pilsoo_item">암호</label>
 							<div class="app_content"><input type="password" name="user_pw" class="w100p" id="password_lbl" placeholder="암호를 입력해주세요" required/></div>
 						</li>
-
 					</ul>
 					<p class="btn_line">
 					<button class="btn_baseColor">로그인</button>
 					</p>
 					<p class ="btn_line">
-					<button type="button" class="btn_baseColor">네이버 아이디로 로그인</button>
+					<a href="${url}" class="btn_baseColor btn_snsLogin" >네이버 아이디로 로그인</a>
 					</p>	
 				</fieldset>
 			</form>

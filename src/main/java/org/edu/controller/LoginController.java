@@ -79,7 +79,8 @@ public class LoginController {
 			session.setAttribute("session_userid", useremail);
 			session.setAttribute("session_levels", "ROLE_USER");
 			session.setAttribute("session_username", username);
-			rdat.addFlashAttribute("msg", "네이버아이디 로그인");
+			session.setAttribute("session_type", "sns");
+			rdat.addFlashAttribute("msg", "sns 아이디 로그인");
 		}else {//인증 실패시
 			rdat.addFlashAttribute("msg", "fail");//login.jsp 전용메세지
 			return "redirect:/login";
@@ -121,6 +122,7 @@ public class LoginController {
 			//하단부터는 비즈니스로직에 따라 필요에 따라 개발자가 발생시키는 세션변수 시작
 			MemberVO memberVO = memberService.readMember(userid);
 			session.setAttribute("session_username", memberVO.getUser_name());
+			session.setAttribute("session_type", "normal");
 		}
 		rdat.addFlashAttribute("msg", "로그인");
 		return "redirect:/";
