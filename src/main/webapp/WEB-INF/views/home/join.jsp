@@ -163,7 +163,7 @@ jQuery(document).ready(function(){
 						<li class="clear">
 							<label for="enabled_lbl" class="tit_lbl pilsoo_item">회원권한</label>
 							<div class="app_content radio_area">
-								<select name="levels" class="gender" disabled>
+								<select name="levels" class="gender">
 									<option value="ROLE_USER" selected>일반사용자</option>
 								</select>
 							</div>

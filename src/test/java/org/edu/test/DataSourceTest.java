@@ -80,7 +80,8 @@ public class DataSourceTest {
 		//MemberVO memberVO = new MemberVO();
 		memberVO.setUser_id("dummy_1");
 		memberVO.setUser_name("홍길동");
-		memberVO.setUser_pw("");//암호를 수정하지 않는 사람을 가정...
+		memberVO.setUser_pw("");//이 set을 적용하면, memberVo.getUser_pw() == "" =>공백값
+		//이set을 주서으로 적용하면 memberVO.setUser_pw() ==null->아에 보내지 않음
 		memberVO.setEmail("test@test.com");
 		memberVO.setPoint(100);
 		memberVO.setEnabled(true);

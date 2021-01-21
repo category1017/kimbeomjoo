@@ -8,7 +8,12 @@ public class HelloWorldApp {
 		MemberVO memberVO = new MemberVO();
 		sumFunc(memberVO,4); //플러스 함수를 실행할때 매개변수입니다. 
 		sumFuncABC(3,4);
-		//메서드의 특징, 위와 같이 같은 메서드명 로드된 매개벼수가 다른 방식 오버로드된 메서드라고 합니다. 
+		//메서드의 특징, 위와 같이 같은 메서드명 로드된 매개변수가 다른 방식 오버로드된 메서드라고 합니다. 
+		String testNull = null;
+		String testEmpty = "";
+		System.out.println("null 출력- " + testNull + "/empty출력-  " +testEmpty);
+		//System.out.println("isEmpty메서드null값 출력- "+ testNull.isEmpty());//값이 null이면 에러NullPointer
+		System.out.println("isEmpty메서드공백값 출력- " + testEmpty.isEmpty());
 	}
 
 	//메서드의 매개변수에 대해서.
