@@ -12,6 +12,8 @@ package org.edu.vo;
  *
  */
 public class PageVO {
+	//다중게시판 추가 때문에 매퍼쿼리에 보낼 board_type변수가 필요
+	private String board_type;
 	//변수 중에 boolean(일반데이터형변수) / Boolean(대문자로시작-클래스형변수)
 	//일반데이터형변수는 Null값은 오류가 나타나나, 클래스형변수는 Null로 입력되었을때 처리(허용)하는 로직이 있음.
 	private int perPageNum;///  페이징리스트 목록 개수 변수(리스트 하단에 보이는 페이징번호의 갯수)
@@ -29,6 +31,15 @@ public class PageVO {
 	//검색에 필요한 변수2개도 포함시켜서, 컨트롤러에서 매개변수 사용을 축소하게 됩니다.
 	private String search_type;//검색조건
 	private String search_keyword;//검색어
+	
+	public String getBoard_type() {
+		this.board_type = "notice";//세션으로 사용할 예정
+		return board_type;
+	}
+
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
 	
 	//전체 클래스에서 [게산식]이 4개가 필요. 자동x, 개발자가 만들어야함.(아래)
 	//게산식4개로 반환되는 값은(예) :startPage(11),endPage(20),prev(true),next(false)
@@ -151,5 +162,7 @@ public class PageVO {
 	public void setQueryPerPageNum(int queryPerPageNum) {
 		this.queryPerPageNum = queryPerPageNum;
 	}
+
+
 	
 }

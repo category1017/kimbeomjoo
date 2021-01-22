@@ -14,7 +14,7 @@
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
     	<div class="p-3 control-sidebar-content text-center">
-	    	<h5>로그 아웃</h5><hr class="mb-2"/>
+	    	<h5>로그아웃</h5><hr class="mb-2"/>
 	    	<a href="/logout" class="btn btn-lg btn-primary">로그아웃</a>
     	</div>
   </aside>
@@ -70,9 +70,13 @@ $(document).ready(function(){
 		$(".nav-treeview li a").each(function() {
 		if( $(this).attr('href'). indexOf(current_2) != -1 ) {
 			//위 문제를 처리하는 대체 함수 indexOf 사용
-			$(this).addClass("active");//선택한 메뉴의 배경을 흰색으로 보이게 추가하는 처리.
+			if(current_2 != 'board'){
+				$(this).addClass("active");//선택한 메뉴의 배경을 흰색으로 보이게 추가하는 처리.
+			}
 		} else {
-			$(this).removeClass("active");//선택하지 않은 메뉴의 배경색 흰색을 제거하는 처리.
+			if(current_2 != 'board'){
+				$(this).removeClass("active");//선택하지 않은 메뉴의 배경색 흰색을 제거하는 처리.
+			}
 		}
 	});	
 });

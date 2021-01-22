@@ -21,7 +21,7 @@ public class BoardServiceImpl implements IF_BoardService {
 	
 	@Inject //DAO클래스를 주입받아서 사용변수 생성
 	private IF_BoardDAO boardDAO;
-
+	
 	@Override
 	public List<BoardVO> selectBoard(PageVO pageVO) throws Exception {
 		// DAO 클래스 사용코드(아래)
