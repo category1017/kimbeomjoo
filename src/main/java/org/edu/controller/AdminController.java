@@ -52,6 +52,13 @@ public class AdminController {
 	@Inject
 	IF_MemberService memberService;//멤버인터페이스를 주입빋아서 memberService오브젝트 변수를 생성.
 	
+	//게시판생성관리 리스트 매핑
+	@RequestMapping(value="/admin/bbs_type/bbs_type_list",method=RequestMethod.GET)
+	public String bbs_type_list() throws Exception{
+		//여기는 model을 이용해서 jsp로 board_type_lsit오브젝트를 보낼필요X, ControllerAdvice클래스에서 만들었기 때문에
+		return "admin/bbs_type/bbs_type_list";
+	}
+	
 	//GET은 URL전송방식(아무데서나 브라우저주소에 적으면 실행됨), POST는 폼전송방식(해당페이지에서만 작동가능)
 	@RequestMapping(value="/admin/board/board_delete",method=RequestMethod.POST)
 	public String board_delete(RedirectAttributes rdat, PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
@@ -110,6 +117,8 @@ public class AdminController {
 		//boardVO.setContent(securityCode.unscript(xss_date));
 		//시큐어 코딩 끝		
 		model.addAttribute("boardVO",boardVO);
+		//model.addAttribute("board_type_list","게시판타입 리스트 오브젝트")
+		//게시판타입리스트는 위처럼 개별 메서드에서 처리하지 않고, AdviceController클래스로 대체 합니다.
 		return "admin/board/board_update"; //파일경로
 	}
 	@RequestMapping(value="/admin/board/board_update",method=RequestMethod.POST)
@@ -241,18 +250,21 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="admin/board/board_list",method=RequestMethod.GET)
-	public String board_list(HttpServletRequest request, @RequestParam(value="board_type", required=false) String board_type, @ModelAttribute("pageVO")PageVO pageVO, Model model) throws Exception {
+	public String board_list(@ModelAttribute("pageVO")PageVO pageVO, Model model) throws Exception {
 		//게시판 타입을 세션변수로 저장(아래)
+		/*AOP기능으로 대체
+		 * HttpServletRequest request, @RequestParam(value="board_type", required=false) String board_type,
 		HttpSession session = request.getSession();
 		if(board_type !=null ) {
 			session.setAttribute("session_board_type", board_type);
 		}
-		/* PageVO와 BoardVO에서 세션변수로 get/set하기 때문에 주석처리
+		// PageVO와 BoardVO에서 세션변수로 get/set하기 때문에 주석처리
 		if(session.getAttribute("session_board_type") != null) {
 			board_type = (String) session.getAttribute("session_board_type");
 			pageVO.setBoard_type(board_type);//다중게시판 쿼리때문에 추가
 		}
 		*/
+		
 		//테스트용 더미 게시판 데이터 만들기(아래)
 		/*
 		 * BoardVO input_board = new BoardVO(); input_board.setBno(1);
