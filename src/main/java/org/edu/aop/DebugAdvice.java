@@ -48,5 +48,10 @@ public class DebugAdvice {
 		logger.info("AOP 디버그 끝========================");
 		return result;
 	}
-	
+	//현재 클래스명은 디버그용도의 AOP(스프링전용)를 사용했으나,
+	//여기서 AOP는 예전자바코딩의 인터셉터(AdviceController)와 같은 기능
+	//추가로 다중게시판용 세션관리도 AOP기능을 사용하게 됩니다. 코딩은 아래와 같습니다.
+	//아래 컨트롤러 패키지 안에 있는 모든 메서드가 실행될때, 공통으로 필요한 세션관리코드를 넣습니다. 
+	 @Around("execution(* org.edu.controller.*Controller*.*(..))")
+	 public Object
 }
