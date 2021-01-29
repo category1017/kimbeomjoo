@@ -419,6 +419,7 @@ $(document).ready(function() {
 				//입력이 success된 후에 페이지는 댓글개수1증가+ 1페이지로 가고, replyList()댓글 목록 호출
 				var reply_count = $("#reply_count").text();//$("영역").val(input데이터),
 				//alert(reply_count);//디버그
+				if(reply_count ==""){reply_count=0;}
 				$("#reply_count").text(parseInt(reply_count)+1)//$("영역").text(영역안쪽의 문자열)
 				$("#reply_page").val("1");
 				replyList();

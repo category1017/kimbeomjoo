@@ -313,8 +313,9 @@ $(document).ready(function() {
 				reply_text:reply_text,
 				replyer:replyer
 			}),//RestAPI서버컨트롤러로 보내는 JSON값
-			success:function(result) {//응답이 성공하면(상태값200)위경로에서 반환받은 result(json데이터)를 이용해서 화면을 재구현
+			success:function(result) {//응답이 성공하면(상태값200)위 경로에서 반환받은 result(json데이터)를 이용해서 화면을 재구현
 				var reply_count = $("#reply_count").text();//get
+				if(reply_count ==""){reply_count=0;}
 				$("#reply_count").text(parseInt(reply_count)+1);//set
 				//댓글 3페이지를 보고 있다가 , 댓글 입력했을때, 본인 작성할 댓글 바로 확인 가능하도록 1페이지로 가도록 유도
 				$("#reply_page").val("1");//1페이지 값으로 set
