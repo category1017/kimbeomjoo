@@ -117,8 +117,8 @@
 
 									<div class="card-body">
 										<div class="form-group">
-											<label for="replyer">replyer</label> 
-											<input type="text" class="form-control" name="replyer" id="replyer" placeholder="작성자를 입력해주세요." required>
+											<label for="replyer">Replyer</label> 
+											<input value="${session_username}" type="text" class="form-control" name="replyer" id="replyer" placeholder="작성자를 입력해주세요." required>
 											<!--폼에서 input같은 입력태그에는 name속성이 반드시 필요,데이터베이스에 입력할 때 변수값을 전송하게 되늰데, 전송값을 저장하는 이름이 name가 되고 위에서는 writer -->
 										</div>
 										<div class="form-group">

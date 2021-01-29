@@ -19,15 +19,15 @@ user_name like 'user_2020%' -->
 	<if test="search_type !='' and search_type !=null">
 		where
 		<if test="search_type == 'all'.toString()">
-				user_id like concat('%',#{search_keyword},'%')
+				user_id like '%'||#{search_keyword}||'%'
 				or
-				user_name like concat('%',#{search_keyword},'%')
+				user_name like '%'||#{search_keyword}||'%'
 		</if>
 		<if test="search_type == 'user_id'.toString()">
-				user_id like concat('%',#{search_keyword},'%')
+				user_id like '%'||#{search_keyword}||'%'
 		</if>
 		<if test="search_type == 'user_name'.toString()">
-				user_name like concat('%',#{search_keyword},'%')
+				user_name like '%'||#{search_keyword}||'%'
 		</if>
 	</if>
 </sql>
@@ -37,10 +37,19 @@ select count(*) from tbl_member
 </select>
 
 <select id="selectMember" resultType="org.edu.vo.MemberVO">
-select * from tbl_member
-<include refid="sqlWhere"></include>
-order by reg_date desc
-limit #{queryStartNo}, #{queryPerPageNum}
+SELECT TABLE_B.* FROM 
+(
+    SELECT ROWNUM AS RNUM, TABLE_A.* FROM
+    (
+    SELECT * FROM TBL_MEMBER
+    <include refid="sqlWhere"></include>
+<![CDATA[
+    order by reg_date desc
+    ) TABLE_A
+    WHERE ROWNUM <= (#{queryStartNo}/#{queryPerPageNum}+1)*#{queryPerPageNum}
+) TABLE_B
+WHERE TABLE_B.RNUM > (#{queryStartNo}/#{queryPerPageNum})*#{queryPerPageNum}
+]]>
 </select>
 
 <insert id="insertMember">
@@ -61,7 +70,7 @@ INSERT INTO tbl_member (
 	#{point},
 	#{enabled},
 	#{levels},
-	now()
+	sysdate
 )
 </insert>
 <!-- jsp에서 변수표현 EL표현법 ${변수명}, 마이바티스에서는 변수표현을 #{변수명} -->
@@ -77,7 +86,7 @@ SET
    point = #{point},
    enabled = #{enabled},
    levels = #{levels},
-   update_date = now()
+   update_date = sysdate
 WHERE
     user_id = #{user_id}
 </update>
