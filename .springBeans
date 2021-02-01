@@ -7,7 +7,6 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/main/webapp/WEB-INF/spring/test-contextoriginal.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/test-context.xml</config>
 	</configs>
 	<autoconfigs>
