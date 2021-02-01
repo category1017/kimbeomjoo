@@ -35,7 +35,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * 데이터베이스 테이블에 Create, Read, Update, Delete 테스트용 클래스
  * 제이유닛4클래스를 사용.
  * 단위테스트는 톰캣이 실행되지 않아도 작동이 되야 합니다.
- * 그래서, 테스트 클래스 상단에 servelet-context.xml 이러한 설정파일을 불러들여서 실행이 가능
+ * 그래서, 테스트 클래스 상단에 servlet-context.xml 이러한 설정파일을 불러들여서 실행이 가능
  * @author 김범주
  *
  */
@@ -113,13 +113,16 @@ public class DataSourceTest {
 		boardVO.setTitle("더미게시물");
 		boardVO.setContent("더미 내용 입니다.");
 		boardVO.setWriter("일반사용자");
-		Date reg_date = new Date();
-		Calendar cal = Calendar.getInstance();
-		boardVO.setReg_date(reg_date);
-		boardVO.setUpdate_date(reg_date);
-		
+						
 		//boardVO.setBno(프라이머리키);
-		for(int cnt=0;cnt<=100;cnt++) {//더미게시물 100입력
+		for(int cnt=0;cnt<=0;cnt++) {//더미게시물 100입력
+			Date reg_date = new Date();
+			Calendar cal = Calendar.getInstance();//+
+			cal.setTime(reg_date);//+
+			cal.add(Calendar.SECOND, cnt);//+ cnt초 더하기
+			//???????????????????????????????????????????
+			boardVO.setReg_date(cal.getTime());//이부분이 작동을 하지 않아서 문제
+			//???????????????????????????????????????????
 			boardDAO.insertBoard(boardVO);
 		}
 	}
@@ -140,10 +143,16 @@ public class DataSourceTest {
 		memberVO.setPoint(100);
 		memberVO.setEnabled(true);
 		memberVO.setLevels("ROLE_USER");
-		Date reg_date = new Date();
-		memberVO.setReg_date(reg_date);//매퍼쿼리에서 처리로 대체
-		for(int cnt=0;cnt<=100;cnt++) {//더미사용자 100명 입력
+		
+		for(int cnt=0;cnt<=0;cnt++) {//더미사용자 100명 입력
 			memberVO.setUser_id(memberPrimaryKey());
+			Date reg_date = new Date();
+			Calendar cal = Calendar.getInstance();//+
+			cal.setTime(reg_date);//+
+			cal.add(Calendar.SECOND, cnt);//+ cnt초 더하기
+			//???????????????????????????????????????????
+			memberVO.setReg_date(cal.getTime());//이부분이 작동을 하지 않아서 문제
+			//???????????????????????????????????????????
 			memberDAO.insertMember(memberVO);
 		}		
 	}

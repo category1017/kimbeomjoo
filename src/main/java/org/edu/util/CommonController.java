@@ -54,7 +54,8 @@ public class CommonController {
 	 * 만약 첨부파일 이미지가 아니면, 대체 이미지를 보이기 위해서 확장자 체크가 필요합니다. 
 	 * 변수생성 후 바로 리스트 3개 입력처리.
 	 */
-	@SuppressWarnings("serial")
+	//첨부파일이 이미지인지 아닌지 확장자 체크를 위해 
+	@SuppressWarnings("serial") // serialVersionUID 필드와 관련된 경고를 제거
 	private ArrayList<String> checkImgArray = new ArrayList<String>() {
 		{
 			add("gif");
@@ -74,7 +75,7 @@ public class CommonController {
 	
 	/**
 	 * 게시물 첨부파일 이미지보기 메서드 구현(크롬에서는 문제 없고, 스프링시큐리티 적용후 IE에서 지원가능)
-	 * 에러메시지 처리: getOutputStream() has already been called for this respons
+	 * 에러메시지 처리: getOutputStream() has already been called for this response
 	 * @throws IOException 
 	 */
 	@RequestMapping(value = "/image_preview", method = RequestMethod.GET)//, produces = MediaType.IMAGE_JPEG_VALUE)
@@ -113,7 +114,7 @@ public class CommonController {
 	
 	//파일 다운로드 구현 메서드(아래)
 	@RequestMapping(value="/download", method=RequestMethod.GET)
-	@ResponseBody //이 애노테이션으로 지정된 메서드는 페이지 이동처리아니고, RestAPI처럼 현재페이지에 구현결과를 전송받습니다. 
+	@ResponseBody //이 애노테이션으로 지정된 메서드는 페이지 이동처리아니고, RestAPI처럼 현재페이지에 구현결과를 전송받는다. 
 	public FileSystemResource download(
 			@RequestParam("save_file_name") String save_file_name,
 			@RequestParam("real_file_name") String real_file_name,
