@@ -37,21 +37,21 @@ $(document).ready(function(){
                     <li class="imglist0">
                         <div class="roll_content">
                             <a href="javascript:;">
-							<p class="roll_txtline">OOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
+							<p class="roll_txtline"></p>
 							</a>
                         </div>
                     </li>
                     <li class="imglist1">
                         <div class="roll_content">
                             <a href="javascript:;">
-							<p class="roll_txtline">OOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
+							<p class="roll_txtline"></p>
 							</a>
                         </div>
                     </li>
                     <li class="imglist2">
                         <div class="roll_content">
                             <a href="javascript:;">
-							<p class="roll_txtline">OOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
+							<p class="roll_txtline"></p>
 							</a>
                         </div>
                     </li>
