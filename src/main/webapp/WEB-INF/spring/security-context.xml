@@ -33,6 +33,7 @@
 		username-parameter="user_id"
 		password-parameter="user_pw"
 	/>
+	<!-- 아이디를 일정기간 저장하는 기능 -->
 	<security:remember-me key="remember-key" token-validity-seconds="604800" remember-me-parameter="remember-me-parameter" />
 	<security:logout logout-url="/logout" logout-success-url="/" invalidate-session="true" 
 	delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
