@@ -67,7 +67,7 @@
                     <tr>
                       <th>bno</th><!-- 테이블 헤드 타이틀태그 th -->
                       <th>title[reply_count]</th>
-                      <th>write</th>
+                      <th>writer</th>
                       <th>reg_date</th>
                       <th>view_count</th>  
                     </tr>
