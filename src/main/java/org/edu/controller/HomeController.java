@@ -157,8 +157,18 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/home/board/board_update",method=RequestMethod.GET)
-	public String board_update(Model model, @ModelAttribute("pageVO") PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
+	public String board_update(HttpServletRequest request, Model model, @ModelAttribute("pageVO") PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
 		BoardVO boardVO = boardService.readBoard(bno);
+		
+		//수정시 본인이 작성한 글인지 체크용(아래)
+		String session_userid = (String) request.getSession().getAttribute("session_userid");
+		if(!session_userid.equals(boardVO.getWriter())){//작성자와 세션아이디가 같지 않으면
+			model.addAttribute("msg","본인이 작성한 글만 수정 가능합니다. \\n이전페이지로 이동");
+			//redirect대신에 forward를 사용하면 Model을 사용가능
+			//forward 새로고침하면, 게시글 테러가 발생가능함, redirect하면 새로고침해도 게시글 테러가 발생X
+			return "forward:/home/board/board_view?bno="+bno;//이전화면으로 되돌아감
+		}
+		
 		//첨부파일처리(아래)
 		List<AttachVO> files = boardService.readAttach(bno);
 		//아래변수 List<AttachVO>세로배치를 가로배치로 변경할때 필요
