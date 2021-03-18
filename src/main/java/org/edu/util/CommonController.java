@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
@@ -46,6 +47,25 @@ public class CommonController {
 	@Inject
 	IF_BoardDAO boardDAO;//첨부파일을 개별 삭제하기 위해서 인젝트 합니다. 
 	
+	/**
+	 * 프로필 jpg파일 업로드 전용 메서드 구현
+	 */
+	//첨부파일 처리는 MultipartFile(첨부파일 태그 name 1개일때), MultipartServletRequest(첨부파일 태그name이 여러개일때)
+	public void profile_upload(String user_id,HttpServletRequest request, MultipartFile file) throws Exception{
+		//프로필 첨부파일 처리(아래)
+		//직접접근이 가능한 경로에 프로필업로드 폴더를 생성(서버용 경로이기 때문에 / 사용, 윈도우용은 \)
+		String folderPath = request.getServletContext().getRealPath("/resources/profile");
+		File makeFolder = new File(folderPath);
+		if(!makeFolder.exists()) {//프로필폴더가 존재하지 않으면
+			makeFolder.mkdir(); //프로필 폴더가 생성됨
+		}
+		if(file.getOriginalFilename() != null) {//jsp에서 전송받은 파일이 있다면 
+			byte[] in = file.getBytes();
+			String uploadFile = folderPath +"/"+ user_id+"."+ StringUtils.getFilenameExtension(file.getOriginalFilename());
+			File out = new File(uploadFile);
+			FileCopyUtils.copy(in, out);//
+		}
+	}
 	
 	/**
 	 * 첨부파일의 확장자를 비교해서 이미지인지, 엑셀,한글과 같은 일반파일인지 확인하는 List배열변수

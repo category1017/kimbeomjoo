@@ -44,6 +44,7 @@
 				<!-- jsp에서 자바변수(저장소)를 사용하는 방법 Model로 수신한  $변수명 으로 표시 -->
 				<%-- ${user_id2} 아래 보안코딩 적용 (씨큐어코딩)--%>
 				<c:out value="${memberVO.user_id}"></c:out>
+				<img class="img-circle" src="/resources/profile/${memberVO.user_id}.jpg" style="width:50px;height:50px;" />
 				</p>
 				
 				<!-- 부트스트랩  mr-1 오른쪽여백주기 클래스명 : (margin-right:25% 여백 important;)-->

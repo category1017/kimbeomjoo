@@ -31,7 +31,7 @@
           <div class="col-12"><!-- 그리드시스템중 12개 가로칼럼 중 12개=width:100% -->
          
          <!-- form start -->
-            <form name="update_form" action="/admin/member/member_update" method="post">
+         <form encType="multipart/form-data" name="update_form" action="/admin/member/member_update" method="post">
          
          <div class="card card-primary">
               <div class="card-header">
@@ -47,7 +47,15 @@
 							placeholder="아이디를 입력해주세요." required readonly>
 						<!--폼에서 input같은 입력태그에는 name속성이 반드시 필요,데이터베이스에 입력할 때 변수값을 전송하게 되늰데, 전송값을 저장하는 이름이 name가 되고 위에서는 user_id  -->
 					</div>
-					
+					<div class="form-group">
+						<label>프로필 이미지
+						<img class="img-circle" style="height:50px;width:50px;" src="/resources/profile/${memberVO.user_id}.jpg" />
+						</label>
+						<div class="custom-file">
+						<input accept=".jpg" type="file" name="file" class="custom-file-input" id="customFile_0">
+						<label class="custom-file-label" for="customFile_0" style="color:#999;">jpg형식만 지원합니다.</label>
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="user_pw">Password</label>
 						<!-- html5에서 지원되는 유효성검사 maxlenth,minlength,required,type="email" -->
@@ -121,3 +129,11 @@
 
 
 <%@ include file="../include/footer.jsp" %>
+<!-- 첨부파일 부트스트랩 디자인 JS -->
+<script src="/resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- 첨부파일 선택한 내용 출력 실행 -->
+<script>
+$(document).ready(function () {
+  bsCustomFileInput.init();
+});
+</script>
