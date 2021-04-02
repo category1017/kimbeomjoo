@@ -14,7 +14,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="<c:out value='/admin' />">Home</a></li>
               <li class="breadcrumb-item active">회원수정</li>
             </ol>
           </div><!-- /.col -->
@@ -48,7 +48,7 @@
 						<!--폼에서 input같은 입력태그에는 name속성이 반드시 필요,데이터베이스에 입력할 때 변수값을 전송하게 되늰데, 전송값을 저장하는 이름이 name가 되고 위에서는 user_id  -->
 					</div>
 					<div class="form-group">
-						<label>프로필 이미지
+						<label>프로필 이미지 &nbsp;
 						<img onerror="this.src='/resources/dist/img/default-150x150.png'" class="img-circle" style="height:50px;width:50px;" src="/resources/profile/${memberVO.user_id}.jpg" />
 						</label>
 						<div class="custom-file">
@@ -137,3 +137,4 @@ $(document).ready(function () {
   bsCustomFileInput.init();
 });
 </script>
+

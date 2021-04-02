@@ -16,7 +16,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="<c:out value='/admin' />">Home</a></li>
               <li class="breadcrumb-item active">게시판리스트</li>
             </ol>
           </div><!-- /.col -->

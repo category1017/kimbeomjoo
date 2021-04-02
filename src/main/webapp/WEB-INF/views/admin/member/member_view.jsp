@@ -15,7 +15,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="<c:out value='/admin' />">Home</a></li>
               <li class="breadcrumb-item active">회원상세보기</li>
             </ol>
           </div><!-- /.col -->
@@ -43,7 +43,7 @@
 				<p class="text-muted">
 				<!-- jsp에서 자바변수(저장소)를 사용하는 방법 Model로 수신한  $변수명 으로 표시 -->
 				<%-- ${user_id2} 아래 보안코딩 적용 (씨큐어코딩)--%>
-				<c:out value="${memberVO.user_id}"></c:out>
+				<c:out value="${memberVO.user_id}"></c:out> &nbsp;&nbsp;&nbsp;&nbsp;
 				<img onerror="this.src='/resources/dist/img/default-150x150.png'" class="img-circle" src="/resources/profile/${memberVO.user_id}.jpg" style="width:50px;height:50px;" />
 				</p>
 				

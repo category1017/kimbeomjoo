@@ -79,7 +79,7 @@ if('${msg_fail}' !=''){
        		<img onerror="this.src='/resources/dist/img/default-150x150.png'" style="width:45px;height:45px;" src="/resources/profile/${session_userid}.jpg" class="img-circle elevation-2" alt="사용자 프로필">
         </div>
         <div class="info">
-          <a href="#" class="d-block">${session_username}</a>
+          <a href="/admin/member/member_view?page=${pageVO.page}&user_id=${session_userid}" class="d-block">${session_username}</a>
         </div>
       </div>
 
