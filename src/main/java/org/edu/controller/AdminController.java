@@ -395,7 +395,7 @@ public class AdminController {
 			commonController.profile_upload(memberVO.getUser_id(), request, file);
 		}
 		//POST 방식으로 넘어온 user_pw값을 BCryptPasswordEncoder클래스로 암호시킴
-		if(memberVO.getUser_pw() == null || memberVO.getUser_pw() =="") {
+		if(memberVO.getUser_pw().isEmpty()) {
 		} else {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String userPwEncoder = passwordEncoder.encode(memberVO.getUser_pw()); 
