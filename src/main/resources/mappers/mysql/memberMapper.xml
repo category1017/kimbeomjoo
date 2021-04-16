@@ -31,6 +31,9 @@ user_name like 'user_2020%' -->
 		</if>
 	</if>
 </sql>
+<delete id="delData">
+delete from tbl_chart where 1=1 
+</delete>
 <insert id="insertData">
 insert into tbl_chart(red,blue,yellow,green,purple,orange)values(
 #{red},#{blue},#{yellow},#{green},#{purple},#{orange}

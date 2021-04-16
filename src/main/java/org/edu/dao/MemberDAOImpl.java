@@ -80,6 +80,12 @@ public class MemberDAOImpl implements IF_MemberDAO {
 		// mapper.xml에 접근하는 방법(아래)
 		sqlSession.update("memberMapper.updateData",chartVO);
 	}
+
+	@Override
+	public void delData() {
+		// mapper.xml에 접근하는 방법(아래)
+		sqlSession.delete("memberMapper.delData");
+	}
 	
 	
 }
