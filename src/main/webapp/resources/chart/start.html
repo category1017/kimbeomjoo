@@ -9,14 +9,14 @@
 <body>
 <canvas id="myChart" width="400" height="400"></canvas>
 <script>
-var jsonData = {Red:12, Blue:19, Yellow:3,Green:5,Purple:2,Orange:7};
+var jsonData = {red:12, blue:19, yellow:3,green:5,purple:2,orange:7};
 //alert(jsonSample.Blue);//디버그
 //var javascriptArray = [12, 19, 3, 5, 2, 3];//자바스크립트의 배열 값
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [],
         datasets: [{
             label: '본인이 좋아하는 색상 설문조사',
             data: jsonData,
@@ -49,60 +49,128 @@ var myChart = new Chart(ctx, {
 });
 </script><!-- 오리지널 자바스크립트 사용 -->
 <select id="selVote">
-	<option value="Red">Red</option>
-	<option value="Blue">Blue</option>
-	<option value="Yellow">Yellow</option>
-	<option value="Green">Green</option>
-	<option value="Purple">Purple</option>
-	<option value="Orange">Orange</option>	
+	<option value="red">Red</option>
+	<option value="blue">Blue</option>
+	<option value="yellow">Yellow</option>
+	<option value="green">Green</option>
+	<option value="purple">Purple</option>
+	<option value="orange">Orange</option>	
 </select>
 <button id="btnVote">투표하기</button>
 <script>
-var btnvote = document.getElementById('btnvote');
+var btnVote = document.getElementById('btnVote');
 var selVote = document.getElementById('selVote');
 btnVote.onclick = function() {
 	var voteIdx = document.getElementById('selVote').options.selectedIndex;
 	//alert(selVote[voteIdx].value);
 	//jsonData[voteIdx] += 1;//누적 자바스크립트의 배열방식
 	//alert(Object.keys(jsonData).length);//Json데이터의 길이구할때 
-	switch(voteIdx){
-	case 0 :
-		jsonData.Red +=1;
+	if(jsonData.red=="") { jsonData.red=0;}
+	if(jsonData.blue=="") { jsonData.blue=0;}
+	if(jsonData.yellow=="") { jsonData.yellow=0;}
+	if(jsonData.green=="") { jsonData.green=0;}
+	if(jsonData.purple=="") { jsonData.purple=0;}
+	if(jsonData.orange=="") { jsonData.orange=0;}
+	switch(voteIdx){//투표버튼을 클릭했을 때 해당 버튼의 값만 +1 하는 스위치문
+	case 0:
+		jsonData.red += 1;//Json데이터 방식 = jsonData.blue
 		break;
-	case 1 :
-		jsonData.Blue +=1;
+	case 1:
+		jsonData.blue += 1;
 		break;
-	case 2 :
-		jsonData.Yellow +=1;
+	case 2:
+		jsonData.yellow += 1;
 		break;
-	case 3 :
-		jsonData.Green +=1;
+	case 3:
+		jsonData.green += 1;
 		break;
-	case 4 :
-		jsonData.Purple +=1;
+	case 4:
+		jsonData.purple += 1;
 		break;
-	case 5 :
-		jsonData.Orange +=1;
+	case 5:
+		jsonData.orange += 1;
 		break;
 	}
-	//jsonData.Red +=1; //json데이터 방식
-	//alert(jsonSample.Blue);
+	//기존 값과 변경된 값 변수로 지정 
+	for(var i=0;i<Object.keys(jsonData).length;i++){
+		switch(selVote[i].value) {
+		case "red":
+			var red = jsonData.red;
+			break;
+		case "blue":
+			var blue = jsonData.blue;
+			break;
+		case "yellow":
+			var yellow = jsonData.yellow;
+			break;
+		case "green":
+			var green = jsonData.green;
+			break;
+		case "purple":
+			var purple = jsonData.purple;
+			break;
+		case "orange":
+			var orange = jsonData.orange;
+			break;
+		}
+	}
+	//alert(red+blue+yellow+green+purple+orange);
+	$.ajax({
+		type:'post',
+		url:'/chart/setdata',
+		dataType:'text',
+		headers:{
+			"Content-Type":"application/json",
+			"X-HTTP-Method-Override":"POST"
+		},
+		data:JSON.stringify({//json데이터를 post전송할 text로 변경.
+			"red":red,
+			"blue":blue,
+			"yellow":yellow,
+			"green":green,
+			"purple":purple,
+			"orange":orange
+		}),
+		success:function(result){
+			myChart.data.datasets[0].data = jsonData;
+			myChart.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
+		},
+		error:function(result){
+			alert("API서버가 작동하지 않습니다.");
+		}
+	});
+}
+//예전에 실시간 대시보드를 구현했던 방법(푸시-카카오톡알림처럼)
+/*
+var i=1;
+var interval = setInterval(function(){
+	var jsonData = {red:i, blue:19, yellow:3,green:5,purple:2,orange:7};
 	myChart.data.datasets[0].data = jsonData;
 	myChart.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
-}
+	i++;
+	console.log("자동으로 "+i+"초마다 실행");
+},1000);//1초마다 DB에 접속해서 새로운 데이터를 받았습니다.
+*/
 </script>
 <script>
 $(document).ready(function(){
 	//alert("제이쿼리 작동확인");//아래 ajax는 무조건 실행
 	$.ajax({
 		type:'get',
-		url:'/resources/chart/start.html',//RestAPI생성 후 변경
+		url:'/chart/getdata',//RestAPI생성 후 변경
 		dataType:'text',//RestAPI에서 받은 데이터형식 -> 아래 result에 들어감
 		success:function(result){
 			//jsonData = [0,0,0,0,0,0];
-			jsonData = {Red:0, Blue:0, Yellow:0,Green:0,Purple:0,Orange:0};
-			myChart.data.datasets[0].data = jsonData;
-			myChart.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
+			if(result=="") {//result값이 없다면 jsonData강제로 생성
+				result = {"red":0, "blue":0, "yellow":0,"green":0,"purple":0,"orange":0};
+				jsonData = result;
+			}else{//result값이 있으면, text로 받기 때문에 json파싱이 필요
+				//json 데이터로 파싱하는 작업(아래2줄)
+				//jsonData = JSON.stringify(result);//Json데이터형식을 text로 변경
+				jsonData = JSON.parse(result);//text데이터를 Json데이터로 변경
+			}
+			myChart.data.datasets[0].data = jsonData;//결과적으로 json데이터를 만들어야함
+			myChart.update();//Chart.js에 내장된 함수로 그래프를 재생 시킴
 		},
 		error:function(result){
 			alert('RestAPI서버에 문제가 있습니다.');
