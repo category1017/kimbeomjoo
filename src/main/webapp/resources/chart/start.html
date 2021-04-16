@@ -8,46 +8,6 @@
 </head>
 <body>
 <canvas id="myChart" width="400" height="400"></canvas>
-<script>
-var jsonData = {"red":12, "blue":19, "yellow":3,"green":5,"purple":2,"orange":7};
-//alert(jsonSample.Blue);//디버그
-//var javascriptArray = [12, 19, 3, 5, 2, 3];//자바스크립트의 배열 값
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [],
-        datasets: [{
-            label: '본인이 좋아하는 색상 설문조사',
-            data: jsonData,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true               
-            }
-        }
-    }
-});
-</script><!-- 오리지널 자바스크립트 사용 -->
 <select id="selVote">
 	<option value="red">Red</option>
 	<option value="blue">Blue</option>
@@ -58,6 +18,58 @@ var myChart = new Chart(ctx, {
 </select>
 <button id="btnVote">투표하기</button>
 <button id="btnVoteDel">초기화하기</button>
+<canvas id="myChart2" width="400" height="400"></canvas>
+
+<script>
+var jsonData = {"red":12, "blue":19, "yellow":3,"green":5,"purple":2,"orange":7};
+//alert(jsonSample.Blue);//디버그
+//var javascriptArray = [12, 19, 3, 5, 2, 3];//자바스크립트의 배열 값
+var ctx = document.getElementById('myChart').getContext('2d');
+var ctx2 = document.getElementById('myChart2').getContext('2d');
+var data_line_bar =  {
+	    labels: [],
+	    datasets: [{
+	        label: '본인이 좋아하는 색상 설문조사',
+	        data: jsonData,
+	        backgroundColor: [
+	            'rgba(255, 99, 132, 0.2)',
+	            'rgba(54, 162, 235, 0.2)',
+	            'rgba(255, 206, 86, 0.2)',
+	            'rgba(75, 192, 192, 0.2)',
+	            'rgba(153, 102, 255, 0.2)',
+	            'rgba(255, 159, 64, 0.2)'
+	        ],
+	        borderColor: [
+	            'rgba(255, 99, 132, 1)',
+	            'rgba(54, 162, 235, 1)',
+	            'rgba(255, 206, 86, 1)',
+	            'rgba(75, 192, 192, 1)',
+	            'rgba(153, 102, 255, 1)',
+	            'rgba(255, 159, 64, 1)'
+	        ],
+	        borderWidth: 1
+	    }]
+	};
+var options_line_bar = {
+        scales: {
+            y: {
+                beginAtZero: true               
+            }
+        }
+    };
+var myChart = new Chart(ctx, {
+    type: 'bar',//radar,doughnut,pie,polarArea, bubble, scatter, area
+    data: data_line_bar,
+    options: options_line_bar
+});
+
+var myChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: data_line_bar,
+    options: options_line_bar
+});
+</script><!-- 오리지널 자바스크립트 사용 -->
+
 <script>
 var btnVote = document.getElementById('btnVote');
 var selVote = document.getElementById('selVote');
@@ -77,6 +89,8 @@ $("#btnVoteDel").on("click", function(){
 					jsonData = {"red":0, "blue":0, "yellow":0,"green":0,"purple":0,"orange":0}; //jsonData 초기화
 					myChart.data.datasets[0].data = jsonData;
 					myChart.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
+					myChart2.data.datasets[0].data = jsonData;
+					myChart2.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
 				}
 			},
 			error:function(result){
@@ -162,6 +176,9 @@ btnVote.onclick = function() {
 		success:function(result){
 			myChart.data.datasets[0].data = jsonData;
 			myChart.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
+			myChart2.data.datasets[0].data = jsonData;
+			myChart2.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
+
 		},
 		error:function(result){
 			alert("API서버가 작동하지 않습니다.");
@@ -199,6 +216,9 @@ $(document).ready(function(){
 			}
 			myChart.data.datasets[0].data = jsonData;//결과적으로 json데이터를 만들어야함
 			myChart.update();//Chart.js에 내장된 함수로 그래프를 재생 시킴
+			//두번째 차트 출력하기(line차트)
+			myChart2.data.datasets[0].data = jsonData;
+			myChart2.update();
 		},
 		error:function(result){
 			alert('RestAPI서버에 문제가 있습니다.');
