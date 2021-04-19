@@ -19,11 +19,17 @@
 <button id="btnVote">투표하기</button>
 <button id="btnVoteDel">초기화하기</button>
 <canvas id="myChart2" width="400" height="400"></canvas>
-<script src="http://localhost:5000/socket.io/socket.io.js">
+<!--<script src="http://localhost:5000/socket.io/socket.io.js"> 
 //노드js에서 발생시킨 소캣io.js를 호출
-</script>
+</script> 
 <script>
 var serverUrl = 'http://localhost:5000';
+var socket = io.connect(serverUrl);
+</script> -->
+<script src="https://kimbeomjoo-nodejs.herokuapp.com/socket.io/socket.io.js">
+</script>
+<script>
+var serverUrl = 'https://kimbeomjoo-nodejs.herokuapp.com';
 var socket = io.connect(serverUrl);
 </script>
 <script>
