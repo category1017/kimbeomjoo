@@ -19,7 +19,13 @@
 <button id="btnVote">투표하기</button>
 <button id="btnVoteDel">초기화하기</button>
 <canvas id="myChart2" width="400" height="400"></canvas>
-
+<script src="http://localhost:5000/socket.io/socket.io.js">
+//노드js에서 발생시킨 소캣io.js를 호출
+</script>
+<script>
+var serverUrl = 'http://localhost:5000';
+var socket = io.connect(serverUrl);
+</script>
 <script>
 var btnVote = document.getElementById('btnVote');
 var selVote = document.getElementById('selVote');
@@ -137,10 +143,7 @@ $("#btnVoteDel").on("click", function(){
 				if(result=="success"){
 					alert("모든 투표자료가 삭제되었습니다.");
 					jsonData = {"red":0, "blue":0, "yellow":0,"green":0,"purple":0,"orange":0}; //jsonData 초기화
-					myChart.data.datasets[0].data = jsonData;
-					myChart.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
-					myChart2.data.datasets[0].data = [jsonData.red,jsonData.blue,jsonData.yellow,jsonData.green,jsonData.purple,jsonData.orange];
-					myChart2.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
+					updateRender();
 				}
 			},
 			error:function(result){
@@ -224,10 +227,7 @@ btnVote.onclick = function() {
 			"orange":orange
 		}),
 		success:function(result){
-			myChart.data.datasets[0].data = jsonData;
-			myChart.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
-			myChart2.data.datasets[0].data = [jsonData.red,jsonData.blue,jsonData.yellow,jsonData.green,jsonData.purple,jsonData.orange];
-			myChart2.update();//Char.js에 내장된 함수로 그래프를 재생 시킴
+			updateRender();
 
 		},
 		error:function(result){
@@ -248,6 +248,13 @@ var interval = setInterval(function(){
 */
 </script>
 <script>
+var updateRender = function(){
+	myChart.data.datasets[0].data = jsonData;//결과적으로 json데이터를 만들어야함
+	myChart.update();//Chart.js에 내장된 함수로 그래프를 재생 시킴
+	//두번째 차트 출력하기(line차트)-레이더차트는 위 막대/라인차트처럼 jsonData로 적용불가
+	myChart2.data.datasets[0].data = [jsonData.red,jsonData.blue,jsonData.yellow,jsonData.green,jsonData.purple,jsonData.orange];
+	myChart2.update();
+};
 $(document).ready(function(){
 	//alert("제이쿼리 작동확인");//아래 ajax는 무조건 실행
 	$.ajax({
@@ -264,16 +271,12 @@ $(document).ready(function(){
 				//jsonData = JSON.stringify(result);//Json데이터형식을 text로 변경
 				jsonData = JSON.parse(result);//text데이터를 Json데이터로 변경
 			}
-			myChart.data.datasets[0].data = jsonData;//결과적으로 json데이터를 만들어야함
-			myChart.update();//Chart.js에 내장된 함수로 그래프를 재생 시킴
-			//두번째 차트 출력하기(line차트)-레이더차트는 위 막대/라인차트처럼 jsonData로 적용불가
-			myChart2.data.datasets[0].data = [jsonData.red,jsonData.blue,jsonData.yellow,jsonData.green,jsonData.purple,jsonData.orange];
-			myChart2.update();
+			updateRender();
 		},
 		error:function(result){
 			alert('RestAPI서버에 문제가 있습니다.');
 		}
-	});
+	})
 });
 </script>
 </body>
