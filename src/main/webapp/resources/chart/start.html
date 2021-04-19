@@ -144,6 +144,7 @@ $("#btnVoteDel").on("click", function(){
 					alert("모든 투표자료가 삭제되었습니다.");
 					jsonData = {"red":0, "blue":0, "yellow":0,"green":0,"purple":0,"orange":0}; //jsonData 초기화
 					updateRender();
+					socket.emit("OnOff", {msg:'updateRender'});//1:1통신 노드js로 문자를 OnOff에 담아서 보냄.
 				}
 			},
 			error:function(result){
@@ -228,6 +229,7 @@ btnVote.onclick = function() {
 		}),
 		success:function(result){
 			updateRender();
+			socket.emit("OnOff", {msg:'updateRender'});//1:1통신 노드js로 문자를 OnOff에 담아서 보냄.
 
 		},
 		error:function(result){
@@ -254,8 +256,9 @@ var updateRender = function(){
 	//두번째 차트 출력하기(line차트)-레이더차트는 위 막대/라인차트처럼 jsonData로 적용불가
 	myChart2.data.datasets[0].data = [jsonData.red,jsonData.blue,jsonData.yellow,jsonData.green,jsonData.purple,jsonData.orange];
 	myChart2.update();
+	
 };
-$(document).ready(function(){
+var getData = function(){
 	//alert("제이쿼리 작동확인");//아래 ajax는 무조건 실행
 	$.ajax({
 		type:'get',
@@ -276,7 +279,18 @@ $(document).ready(function(){
 		error:function(result){
 			alert('RestAPI서버에 문제가 있습니다.');
 		}
-	})
+	});
+};
+$(document).ready(function(){ //페이지 로딩시 최초1회만 실행
+	socket.on("OnOff",function(jsonMsg){
+		//msg = JSON.stringify(msg);//json데이터를 스트링데이터로 변경 
+		console.log(socket.id+"가 받은 메세지는 "+jsonMsg.msg);
+		//alert(msg);
+		if(jsonMsg.msg=="updateRender"){
+			getData();
+		}
+	});
+	getData();//차트에 초기 데이터 바인딩
 });
 </script>
 </body>
