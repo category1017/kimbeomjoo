@@ -69,6 +69,9 @@ if('${msg}' != '') {//자바의 EL표기법 = 달라{변수명}
                             <ul class="submenu_list">
                                 <li><a href="/sample">반응형홈페이지</a></li>
                             </ul>
+                           	<ul class="submenu_list">
+                                <li><a href="/resources/chart/start.html">차트실시간렌더링(소켓통신)</a></li>
+                            </ul>
                         </div>
 					</li>
 					<!-- 자바jstl로 board_type_list의 1번째 레코드값 변수 생성 -->
