@@ -69,8 +69,12 @@ if('${msg}' != '') {//자바의 EL표기법 = 달라{변수명}
                             <ul class="submenu_list">
                                 <li><a href="/sample">반응형홈페이지</a></li>
                             </ul>
-                           	<ul class="submenu_list">
-                                <li><a href="/resources/chart/start.html">차트실시간렌더링(소켓통신)</a></li>
+                        </div>
+					</li>
+					<li><a href="/resources/chart/start.html" class="openAll2">RestAPI서비스</a>
+                        <div class="gnb_depth gnb_depth2_2">
+                            <ul class="submenu_list">
+                               <li><a href="/resources/chart/start.html">차트실시간렌더링(소켓통신)</a></li>
                             </ul>
                         </div>
 					</li>
@@ -80,8 +84,8 @@ if('${msg}' != '') {//자바의 EL표기법 = 달라{변수명}
 						<c:set var="first_board_type" value="${boardTypeVO.board_type}" />
 						</c:if>
 					</c:forEach>
-					<li><a href="/home/board/board_list?board_type=${first_board_type}" class="openAll2">커뮤니티</a>
-				        <div class="gnb_depth gnb_depth2_2">
+					<li><a href="/home/board/board_list?board_type=${first_board_type}" class="openAll3">커뮤니티</a>
+				        <div class="gnb_depth gnb_depth2_3">
 				        	<ul class="submenu_list">
                             <c:forEach items="${board_type_list}" var="boardTypeVO">
                             	<li><a href="/home/board/board_list?board_type=${boardTypeVO.board_type}">${boardTypeVO.board_name}</a></li>
