@@ -68,6 +68,7 @@ if('${msg}' != '') {//자바의 EL표기법 = 달라{변수명}
                         <div class="gnb_depth gnb_depth2_1">
                             <ul class="submenu_list">
                                 <li><a href="/sample">반응형홈페이지</a></li>
+                                <li><a href="https://category1017.github.io/movie_app_2021">영화 웹 서비스</a></li>
                             </ul>
                         </div>
 					</li>
